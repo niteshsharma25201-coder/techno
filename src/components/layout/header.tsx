@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Eye, Menu } from 'lucide-react';
+import { Eye, Menu, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -9,9 +9,19 @@ import {
   SheetTrigger,
   SheetClose,
 } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { useAuth, useUser } from '@/firebase';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -22,6 +32,18 @@ const navLinks = [
 export default function Header() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
+  const auth = useAuth();
+  const { user, isUserLoading } = useUser();
+
+  const handleLogout = async () => {
+    await auth.signOut();
+  };
+  
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) return 'U';
+    const names = name.split(' ');
+    return names.map(n => n[0]).join('');
+  }
 
   const renderNavLinks = (isMobile = false) =>
     navLinks.map((link) => {
@@ -46,6 +68,84 @@ export default function Header() {
         <li key={link.href}>{linkComponent}</li>
       );
     });
+  
+  const AuthButtons = () => {
+    if (isUserLoading) {
+      return null;
+    }
+
+    if (user) {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user.photoURL ?? ''} alt={user.displayName ?? 'User'} />
+                <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="end" forceMount>
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">{user.displayName ?? 'User'}</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+
+    return (
+      <div className="flex items-center space-x-2">
+        <Button asChild variant="ghost">
+          <Link href="/login">Log In</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/signup">Sign Up</Link>
+        </Button>
+      </div>
+    );
+  };
+  
+  const MobileAuthButtons = () => {
+    if (isUserLoading) {
+      return null;
+    }
+
+    if (user) {
+      return (
+        <SheetClose asChild>
+          <Button onClick={handleLogout} variant="destructive" className="w-full">
+            Log Out
+          </Button>
+        </SheetClose>
+      );
+    }
+    
+    return (
+      <>
+        <SheetClose asChild>
+          <Button asChild variant="outline" className="w-full">
+            <Link href="/login">Log In</Link>
+          </Button>
+        </SheetClose>
+        <SheetClose asChild>
+            <Button asChild className="w-full">
+            <Link href="/signup">Sign Up</Link>
+          </Button>
+        </SheetClose>
+      </>
+    );
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -67,16 +167,7 @@ export default function Header() {
                 <nav className="flex flex-col space-y-4 mt-8">
                   {renderNavLinks(true)}
                   <div className="border-t pt-4 space-y-2">
-                    <SheetClose asChild>
-                      <Button asChild variant="outline" className="w-full">
-                        <Link href="/login">Log In</Link>
-                      </Button>
-                    </SheetClose>
-                    <SheetClose asChild>
-                       <Button asChild className="w-full">
-                        <Link href="/signup">Sign Up</Link>
-                      </Button>
-                    </SheetClose>
+                    <MobileAuthButtons />
                   </div>
                 </nav>
               </SheetContent>
@@ -89,14 +180,7 @@ export default function Header() {
                 {renderNavLinks()}
               </ul>
             </nav>
-            <div className="flex items-center space-x-2">
-              <Button asChild variant="ghost">
-                <Link href="/login">Log In</Link>
-              </Button>
-              <Button asChild>
-                <Link href="/signup">Sign Up</Link>
-              </Button>
-            </div>
+            <AuthButtons />
           </>
         )}
       </div>
