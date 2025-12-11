@@ -1,3 +1,82 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "Stylish person wearing sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1732615840503-4a09161c671d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5nbGFzc2VzJTIwbW9kZWx8ZW58MHx8fHwxNzY1NDc3NDAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunglasses model"
+    },
+    {
+      "id": "product-1",
+      "description": "Classic aviator sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1562548726-43b650c82f8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhdmlhdG9yJTIwc3VuZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0NjA2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aviator sunglasses"
+    },
+    {
+      "id": "product-2",
+      "description": "Modern wayfarer sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1656035378783-d474dad077bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2F5ZmFyZXIlMjBzdW5nbGFzc2VzfGVufDB8fHx8MTc2NTM3ODk2MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wayfarer sunglasses"
+    },
+    {
+      "id": "product-3",
+      "description": "Elegant cat eye glasses",
+      "imageUrl": "https://images.unsplash.com/photo-1761896909195-2e3c656b2014?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2F0JTIwZXllJTIwZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0Nzc0MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cat eye glasses"
+    },
+    {
+      "id": "product-4",
+      "description": "Vintage round glasses",
+      "imageUrl": "https://images.unsplash.com/photo-1587572070491-0e5448a0cc43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxyb3VuZCUyMGdsYXNzZXN8ZW58MHx8fHwxNzY1NDcxMTkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "round glasses"
+    },
+    {
+      "id": "product-5",
+      "description": "Titanium rectangular frames",
+      "imageUrl": "https://images.unsplash.com/photo-1722569354346-c2fc2e360808?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmVjdGFuZ3VsYXIlMjBnbGFzc2VzfGVufDB8fHx8MTc2NTQwODg4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rectangular glasses"
+    },
+    {
+      "id": "product-6",
+      "description": "High-performance sports sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1620138996848-5f9d0e72f5cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzcG9ydHMlMjBzdW5nbGFzc2VzfGVufDB8fHx8MTc2NTQ3NzQwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sports sunglasses"
+    },
+    {
+      "id": "product-7",
+      "description": "Daily disposable contact lenses pack",
+      "imageUrl": "https://images.unsplash.com/photo-1578903279423-9fe363f1f7b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwbGVuc2VzfGVufDB8fHx8MTc2NTQ3NDgxNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "contact lenses"
+    },
+    {
+      "id": "product-8",
+      "description": "Advanced polarized lenses",
+      "imageUrl": "https://images.unsplash.com/photo-1700825238503-1c3505314edf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwb2xhcml6ZWQlMjBsZW5zZXN8ZW58MHx8fHwxNzY1NDc3NDAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "polarized lenses"
+    },
+    {
+      "id": "product-9",
+      "description": "Lightweight metal frames",
+      "imageUrl": "https://images.unsplash.com/photo-1749032712013-6f21d1be6a6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtZXRhbCUyMGdsYXNzZXN8ZW58MHx8fHwxNzY1NDc3NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "metal glasses"
+    },
+    {
+      "id": "product-10",
+      "description": "Designer brand sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1759933253608-ba60cfb8dcf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGVzaWduZXIlMjBzdW5nbGFzc2VzfGVufDB8fHx8MTc2NTQ3NzQwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "designer sunglasses"
+    },
+    {
+      "id": "product-11",
+      "description": "Monthly contact lenses",
+      "imageUrl": "https://images.unsplash.com/photo-1620391901754-a44de471e34c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb250YWN0JTIwbGVucyUyMGJveHxlbnwwfHx8fDE3NjU0Nzc0MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "contact lens box"
+    },
+    {
+      "id": "product-12",
+      "description": "Blue light blocking glasses",
+      "imageUrl": "https://images.unsplash.com/photo-1726086870011-2d07a5857518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wdXRlciUyMGdsYXNzZXN8ZW58MHx8fHwxNzY1NDc3NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "computer glasses"
+    }
+  ]
 }
