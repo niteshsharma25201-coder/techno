@@ -1,0 +1,142 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Technoii Optics application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number of the user."
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "description": "Date of birth of the user.",
+          "format": "date-time"
+        },
+        "address": {
+          "type": "string",
+          "description": "User's address."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    },
+    "Admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Admin",
+      "type": "object",
+      "description": "Represents an administrator of the Technoii Optics application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the admin."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the admin."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the admin."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the admin.",
+          "format": "email"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the admin was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the admin was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information. Accessible only to the user with matching {userId} or an admin.  Path-based ownership ensures authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "Admin",
+          "schema": {
+            "$ref": "#/backend/entities/Admin"
+          },
+          "description": "Documents in this collection indicate admin privileges for the corresponding user ID. Authorization based on document existence, not content.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the administrator."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "This Firestore structure prioritizes security and scalability for the Technoii Optics application, focusing on authorization independence and clear access patterns.  User data is stored under `/users/{userId}` with standard profile information.  Admin roles are managed via the `/roles_admin/{userId}` collection; the *existence* of a document in this collection grants admin privileges.  This avoids complex role-based checks within document data, improving security rule simplicity and performance. The structure is designed to support listing operations (QAPs) without exposing sensitive data. It uses path-based ownership for user data and existence checks for global roles.\n\n**Authorization Independence:** The `/users/{userId}` path ensures ownership is determined solely by the path itself and the authenticated user's ID (`request.auth.uid`). The `/roles_admin/{userId}` collection uses the existence of a document as a proxy for admin role.  There are no dependencies on `get()` calls to other documents to authorize requests.\n\n**QAPs:** The structure ensures Query Authorization Predictability.  Listing users is restricted, and access to user profiles is controlled by path-based ownership. Admin rights are verified via existence checks, allowing efficient and secure listing of administrative users."
+  }
+}
