@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import VirtualTryOn from '@/components/virtual-try-on';
-import { ShoppingCart, ShoppingBag } from 'lucide-react';
+import { ShoppingCart, ShoppingBag, ShieldCheck } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 type ProductPageProps = {
   params: {
@@ -82,6 +83,19 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="mt-4">
             <VirtualTryOn />
           </div>
+
+          <Card className="mt-6 bg-secondary/50">
+            <CardHeader className="flex flex-row items-center gap-4 p-4">
+              <ShieldCheck className="w-8 h-8 text-primary" />
+              <CardTitle className="text-xl p-0">Return Policy</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 pt-0">
+              <p className="text-sm text-muted-foreground">
+                Returns are available if the product seal is not broken. Please check the product carefully upon receipt.
+              </p>
+            </CardContent>
+          </Card>
+
         </div>
       </div>
     </div>
