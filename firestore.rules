@@ -10,6 +10,7 @@
  *   scoped directly to the user who owns the document.
  * - /roles_admin/{userId}: A lookup collection where the existence of a document
  *   signifies that the user with the corresponding {userId} has administrative privileges.
+ * - /products/{productId}/reviews/{reviewId}: Stores user-submitted reviews for products.
  *
  * Key Security Decisions:
  * - Admin by Existence: Administrator status is determined by the existence of a
@@ -23,6 +24,8 @@
  * - Self-Creation: Users can only create their own user document (`/users/{userId}`
  *   where `{userId}` matches their auth UID), establishing a secure ownership model
  *   from the start.
+ * - Review Moderation: Logged-in users can create reviews, but only they can update
+ *   or delete their own reviews. All users can read reviews.
  *
  * Denormalization for Authorization:
  * This ruleset relies on path-based ownership for `/users/{userId}` documents, making
@@ -86,6 +89,19 @@ service cloud.firestore {
       return request.resource.data.id == resource.data.id;
     }
 
+    /**
+     * Validates the structure and content of a review document.
+     */
+    function isValidReview() {
+      let data = request.resource.data;
+      return data.productId is string &&
+             data.userId == request.auth.uid &&
+             data.userName is string &&
+             data.rating is number && data.rating >= 1 && data.rating <= 5 &&
+             data.comment is string && data.comment.size() > 0 &&
+             data.createdAt is string;
+    }
+
     // ----------------------------------------------------------------------
     // Collection Rules
     // ----------------------------------------------------------------------
@@ -96,18 +112,6 @@ service cloud.firestore {
      *   users to manage their own data. Admins are granted read-only access.
      * @path
      *   /users/{userId}
-     * @allow
-     *   - (get) A user reading their own profile: `auth.uid == 'user_abc'` reads `/users/user_abc`.
-     *   - (get) An admin reading any user profile: `auth.uid == 'admin_xyz'` reads `/users/user_abc`.
-     *   - (create) A new user creating their own profile: `auth.uid == 'new_user'` creates `/users/new_user`.
-     *   - (update) A user updating their own profile: `auth.uid == 'user_abc'` updates `/users/user_abc`.
-     * @deny
-     *   - (get) A user trying to read another user's profile: `auth.uid == 'user_123'` reads `/users/user_456`.
-     *   - (update) An admin trying to update a user's profile.
-     *   - (list) Any user trying to list all documents in the `/users` collection.
-     * @principle
-     *   Restricts access to a user's own data tree (Path-based Ownership) and provides
-     *   read-only access for users with a specific role (Admin).
      */
     match /users/{userId} {
       allow get: if isOwner(userId) || isAdmin();
@@ -124,15 +128,6 @@ service cloud.firestore {
      *   can view or modify documents in this collection.
      * @path
      *   /roles_admin/{userId}
-     * @allow
-     *   - (get) An admin checking if another user is an admin: `auth.uid == 'admin_A'` reads `/roles_admin/user_B`.
-     *   - (list) An admin listing all other admins.
-     *   - (create) An admin granting admin rights to another user: `auth.uid == 'admin_A'` creates `/roles_admin/user_B`.
-     * @deny
-     *   - (get, list, create, update, delete) Any non-admin user attempting any operation.
-     * @principle
-     *   Enforces Role-Based Access Control (RBAC) for a privileged operation (managing admins).
-     *   Authorization is based on the role of the requester, not ownership of the data.
      */
     match /roles_admin/{userId} {
       allow get: if isAdmin();
@@ -140,6 +135,18 @@ service cloud.firestore {
       allow create: if isAdmin();
       allow update: if isAdmin() && resource != null;
       allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description
+     *   Manages product reviews.
+     * @path
+     *   /products/{productId}/reviews/{reviewId}
+     */
+    match /products/{productId}/reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidReview();
+      allow update, delete: if isSignedIn() && isOwner(resource.data.userId);
     }
   }
 }

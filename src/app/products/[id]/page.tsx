@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import VirtualTryOn from '@/components/virtual-try-on';
-import { ShoppingCart, ShoppingBag, ShieldCheck } from 'lucide-react';
+import { ShoppingCart, ShoppingBag, ShieldCheck, Truck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import ProductReviews from '@/components/products/product-reviews';
 
 type ProductPageProps = {
   params: {
@@ -84,20 +85,34 @@ export default function ProductPage({ params }: ProductPageProps) {
             <VirtualTryOn />
           </div>
 
-          <Card className="mt-6 bg-secondary/50">
-            <CardHeader className="flex flex-row items-center gap-4 p-4">
-              <ShieldCheck className="w-8 h-8 text-primary" />
-              <CardTitle className="text-xl p-0">Return Policy</CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 pt-0">
-              <p className="text-sm text-muted-foreground">
-                Returns are available if the product seal is not broken. Please check the product carefully upon receipt.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="grid sm:grid-cols-2 gap-4 mt-6">
+            <Card className="bg-secondary/50">
+              <CardHeader className="flex flex-row items-center gap-4 p-4">
+                <ShieldCheck className="w-8 h-8 text-primary" />
+                <CardTitle className="text-lg p-0">Return Policy</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <p className="text-sm text-muted-foreground">
+                  Returns are available if the product seal is not broken. Please check the product carefully upon receipt.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-secondary/50">
+              <CardHeader className="flex flex-row items-center gap-4 p-4">
+                <Truck className="w-8 h-8 text-primary" />
+                <CardTitle className="text-lg p-0">Free Delivery</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <p className="text-sm text-muted-foreground">
+                  Enjoy free delivery on all orders. No minimum purchase required.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
 
         </div>
       </div>
+      <ProductReviews productId={product.id} />
     </div>
   );
 }
