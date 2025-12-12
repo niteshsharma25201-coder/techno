@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Eye, Menu, LogOut, Search, ShoppingBag } from 'lucide-react';
+import { Eye, Menu, LogOut, Search, ShoppingBag, User as UserIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -104,6 +104,12 @@ export default function Header() {
                 <span>My Orders</span>
               </Link>
             </DropdownMenuItem>
+             <DropdownMenuItem asChild>
+              <Link href="/account">
+                <UserIcon className="mr-2 h-4 w-4" />
+                <span>My Account</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
@@ -133,11 +139,27 @@ export default function Header() {
 
     if (user) {
       return (
-        <SheetClose asChild>
-          <Button onClick={handleLogout} variant="destructive" className="w-full">
-            Log Out
-          </Button>
+        <>
+         <SheetClose asChild>
+            <Link href="/account/orders" className="flex items-center w-full p-4 text-lg text-muted-foreground hover:text-primary">
+                <ShoppingBag className="mr-2 h-5 w-5" />
+                <span>My Orders</span>
+            </Link>
         </SheetClose>
+        <SheetClose asChild>
+            <Link href="/account" className="flex items-center w-full p-4 text-lg text-muted-foreground hover:text-primary">
+                <UserIcon className="mr-2 h-5 w-5" />
+                <span>My Account</span>
+            </Link>
+        </SheetClose>
+        <div className="border-t pt-4">
+          <SheetClose asChild>
+            <Button onClick={handleLogout} variant="destructive" className="w-full">
+              Log Out
+            </Button>
+          </SheetClose>
+        </div>
+        </>
       );
     }
     
