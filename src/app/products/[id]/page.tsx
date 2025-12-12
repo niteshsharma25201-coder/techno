@@ -40,11 +40,11 @@ const lensOptions = [
 ];
 
 const singleVisionSubOptions = [
-    { id: 'sv-basic', name: 'Basic', price: 20 },
-    { id: 'sv-premium', name: 'Premium', price: 40 },
-    { id: 'sv-super-premium', name: 'Super Premium', price: 60 },
-    { id: 'sv-premium-thin', name: 'Premium Thin', price: 80 },
-    { id: 'sv-tinted-glass', name: 'Tinted Glass', price: 50 },
+    { id: 'sv-basic', name: 'Basic', price: 450 },
+    { id: 'sv-premium', name: 'Premium', price: 650 },
+    { id: 'sv-super-premium', name: 'Super Premium', price: 1050 },
+    { id: 'sv-premium-thin', name: 'Premium Thin', price: 2250 },
+    { id: 'sv-tinted-glass', name: 'Tinted Glass', price: 0 },
 ];
 
 const progressiveSubOptions = [
@@ -64,8 +64,8 @@ const bifocalSubOptions = [
 ];
 
 const tintedGlassSubOptions = [
-    { id: 'single', name: 'Single', price: 0 },
-    { id: 'double', name: 'Double', price: 20 },
+    { id: 'single', name: 'Single', price: 850 },
+    { id: 'double', name: 'Double', price: 1250 },
 ];
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -220,7 +220,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                             <SelectContent>
                                 {singleVisionSubOptions.map(subOption => (
                                     <SelectItem key={subOption.id} value={subOption.id}>
-                                        {subOption.name} (+ ₹{subOption.price})
+                                        {subOption.name} {subOption.price > 0 ? `(+ ₹${subOption.price})` : ''}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
