@@ -51,7 +51,7 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Column 4: Help & App Download */}
+          {/* Column 4: Help */}
           <div>
             <h3 className="font-bold text-lg mb-4">Help</h3>
             <div className="flex flex-col space-y-3">
@@ -63,15 +63,6 @@ export default function Footer() {
                 <Phone className="h-4 w-4 mr-2" />
                 +919399842936
               </a>
-            </div>
-            <h3 className="font-bold text-lg mt-6 mb-4">Available Soon</h3>
-            <div className="flex items-center space-x-4">
-              <Link href="#">
-                  <Image src="https://picsum.photos/seed/googleplay/135/40" alt="Google Play Store" width={135} height={40} className="rounded-md" />
-              </Link>
-              <Link href="#">
-                  <Image src="https://picsum.photos/seed/appstore/120/40" alt="Apple App Store" width={120} height={40} className="rounded-md"/>
-              </Link>
             </div>
           </div>
         </div>
