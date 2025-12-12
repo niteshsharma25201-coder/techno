@@ -34,9 +34,9 @@ type ProductPageProps = {
 
 const lensOptions = [
   { id: 'zero', name: 'Zero Power', price: 0 },
-  { id: 'single-vision', name: 'Single Vision', price: 50 },
-  { id: 'progressive', name: 'Progressive', price: 120 },
-  { id: 'bifocal', name: 'Bifocal', price: 80 },
+  { id: 'single-vision', name: 'Single Vision', price: 0 },
+  { id: 'progressive', name: 'Progressive', price: 0 },
+  { id: 'bifocal', name: 'Bifocal', price: 0 },
 ];
 
 const singleVisionSubOptions = [
@@ -48,11 +48,11 @@ const singleVisionSubOptions = [
 ];
 
 const progressiveSubOptions = [
-    { id: 'prog-basic', name: 'Basic', price: 120 },
-    { id: 'prog-premium', name: 'Premium', price: 160 },
-    { id: 'prog-super-premium', name: 'Super Premium', price: 200 },
-    { id: 'prog-premium-thin', name: 'Premium Thin', price: 240 },
-    { id: 'prog-tinted-glass', name: 'Tinted Glass', price: 180 },
+    { id: 'prog-basic', name: 'Basic', price: 1150 },
+    { id: 'prog-premium', name: 'Premium', price: 1700 },
+    { id: 'prog-super-premium', name: 'Super Premium', price: 2450 },
+    { id: 'prog-premium-thin', name: 'Premium Thin', price: 4500 },
+    { id: 'prog-tinted-glass', name: 'Tinted Glass', price: 0 },
 ];
 
 const bifocalSubOptions = [
@@ -60,7 +60,7 @@ const bifocalSubOptions = [
     { id: 'bifocal-premium', name: 'Premium', price: 110 },
     { id: 'bifocal-super-premium', name: 'Super Premium', price: 150 },
     { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 190 },
-    { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 130 },
+    { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 0 },
 ];
 
 const tintedGlassSubOptions = [
@@ -238,7 +238,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                             <SelectContent>
                                 {progressiveSubOptions.map(subOption => (
                                     <SelectItem key={subOption.id} value={subOption.id}>
-                                        {subOption.name} (+ ₹{subOption.price})
+                                        {subOption.name} {subOption.price > 0 ? `(+ ₹${subOption.price})` : ''}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
@@ -256,7 +256,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                             <SelectContent>
                                 {bifocalSubOptions.map(subOption => (
                                     <SelectItem key={subOption.id} value={subOption.id}>
-                                        {subOption.name} (+ ₹{subOption.price})
+                                        {subOption.name} {subOption.price > 0 ? `(+ ₹${subOption.price})` : ''}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
