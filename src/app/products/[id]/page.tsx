@@ -1,3 +1,7 @@
+
+'use client';
+
+import { useState } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,6 +14,9 @@ import VirtualTryOn from '@/components/virtual-try-on';
 import { ShoppingCart, ShoppingBag, ShieldCheck, Truck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import ProductReviews from '@/components/products/product-reviews';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 type ProductPageProps = {
   params: {
@@ -17,20 +24,25 @@ type ProductPageProps = {
   };
 };
 
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    id: product.id,
-  }));
-}
+const lensOptions = [
+  { id: 'zero', name: 'Zero Power', price: 0 },
+  { id: 'single-vision', name: 'Single Vision', price: 50 },
+  { id: 'progressive', name: 'Progressive', price: 120 },
+  { id: 'bifocal', name: 'Bifocal', price: 80 },
+];
 
 export default function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.id === params.id);
+  const [selectedLensId, setSelectedLensId] = useState(lensOptions[0].id);
 
   if (!product) {
     notFound();
   }
 
   const image = PlaceHolderImages.find((p) => p.id === product.imagePlaceholderId);
+  
+  const selectedLens = lensOptions.find(l => l.id === selectedLensId) || lensOptions[0];
+  const totalPrice = product.price + selectedLens.price;
 
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
@@ -55,7 +67,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         <div className="flex flex-col gap-4">
           <Badge variant="outline" className="w-fit">{product.category}</Badge>
           <h1 className="text-3xl lg:text-4xl font-bold font-headline">{product.name}</h1>
-          <p className="text-3xl font-bold text-primary">₹{product.price}</p>
+          
           <p className="text-muted-foreground text-base md:text-lg">{product.description}</p>
           
           <Separator />
@@ -68,6 +80,40 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
           
           <Separator />
+          
+          {product.category === 'Eyewear' && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Select Your Lens</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RadioGroup value={selectedLensId} onValueChange={setSelectedLensId}>
+                  {lensOptions.map((lens) => (
+                    <Label
+                      key={lens.id}
+                      htmlFor={lens.id}
+                      className={cn(
+                        'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground',
+                        selectedLensId === lens.id && 'border-primary'
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <RadioGroupItem value={lens.id} id={lens.id} />
+                        <span>{lens.name}</span>
+                      </div>
+                      <span className="font-semibold">
+                        {lens.price > 0 ? `+ ₹${lens.price}` : 'Included'}
+                      </span>
+                    </Label>
+                  ))}
+                </RadioGroup>
+              </CardContent>
+            </Card>
+          )}
+
+          <div className="mt-4">
+            <p className="text-4xl font-bold text-primary">₹{totalPrice}</p>
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button size="lg" className="flex-1" asChild>
