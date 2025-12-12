@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import {
   Dialog,
   DialogContent,
@@ -20,6 +19,7 @@ type PrescriptionModalProps = {
   onClose: () => void;
   productName: string;
   lensType: string;
+  onProceed: () => void;
 };
 
 export default function PrescriptionModal({
@@ -27,8 +27,8 @@ export default function PrescriptionModal({
   onClose,
   productName,
   lensType,
+  onProceed,
 }: PrescriptionModalProps) {
-  const router = useRouter();
   const [rightEye, setRightEye] = useState('');
   const [leftEye, setLeftEye] = useState('');
   const [rightEyeNV, setRightEyeNV] = useState('');
@@ -57,7 +57,7 @@ export default function PrescriptionModal({
         ? { fileName: prescriptionFile.name }
         : prescriptionData,
     });
-    router.push('/checkout');
+    onProceed();
   };
 
   return (

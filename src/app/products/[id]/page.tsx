@@ -1,11 +1,8 @@
-
-
 'use client';
 
 import { useState, useEffect } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import { products } from '@/lib/products';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
@@ -26,53 +23,14 @@ import {
     SelectValue,
   } from '@/components/ui/select';
 import PrescriptionModal from '@/components/products/prescription-modal';
+import { lensOptions, singleVisionSubOptions, progressiveSubOptions, bifocalSubOptions, tintedGlassSubOptions, progressiveTintedGlassSubOptions } from '@/lib/lenses';
+
 
 type ProductPageProps = {
   params: {
     id: string;
   };
 };
-
-const lensOptions = [
-  { id: 'zero', name: 'Zero Power', price: 0 },
-  { id: 'single-vision', name: 'Single Vision', price: 0 },
-  { id: 'progressive', name: 'Progressive', price: 0 },
-  { id: 'bifocal', name: 'Bifocal', price: 0 },
-];
-
-const singleVisionSubOptions = [
-    { id: 'sv-basic', name: 'Basic', price: 450 },
-    { id: 'sv-premium', name: 'Premium', price: 650 },
-    { id: 'sv-super-premium', name: 'Super Premium', price: 1050 },
-    { id: 'sv-premium-thin', name: 'Premium Thin', price: 2250 },
-    { id: 'sv-tinted-glass', name: 'Tinted Glass', price: 0 },
-];
-
-const progressiveSubOptions = [
-    { id: 'prog-basic', name: 'Basic', price: 1150 },
-    { id: 'prog-premium', name: 'Premium', price: 1700 },
-    { id: 'prog-super-premium', name: 'Super Premium', price: 2450 },
-    { id: 'prog-premium-thin', name: 'Premium Thin', price: 4500 },
-    { id: 'prog-tinted-glass', name: 'Tinted Glass', price: 0 },
-];
-
-const bifocalSubOptions = [
-    { id: 'bifocal-basic', name: 'Basic', price: 450 },
-    { id: 'bifocal-premium', name: 'Premium', price: 650 },
-    { id: 'bifocal-super-premium', name: 'Super Premium', price: 1050 },
-    { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 2250 },
-    { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 0 },
-];
-
-const tintedGlassSubOptions = [
-    { id: 'single', name: 'Single', price: 850 },
-    { id: 'double', name: 'Double', price: 1250 },
-];
-
-const progressiveTintedGlassSubOptions = [
-    { id: 'single', name: 'Single', price: 1650 },
-    { id: 'double', name: 'Double', price: 2050 },
-];
 
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -126,11 +84,13 @@ export default function ProductPage({ params }: ProductPageProps) {
     ? currentTintedGlassOptions.find(t => t.id === selectedTintedGlassType)
     : null;
 
-  const totalPrice = product.price + (selectedLens?.price ?? 0)
+  const lensPrice = (selectedLens?.price ?? 0)
     + (selectedSingleVisionLens?.price ?? 0)
     + (selectedProgressiveLens?.price ?? 0)
     + (selectedBifocalLens?.price ?? 0)
     + (selectedTintedGlassOption?.price ?? 0);
+
+  const totalPrice = product.price + lensPrice;
 
   const handleMainLensChange = (value: string) => {
     setSelectedLensId(value);
@@ -157,6 +117,17 @@ export default function ProductPage({ params }: ProductPageProps) {
     }
   };
 
+  const handleBuyNow = () => {
+    const query = new URLSearchParams({
+      productId: product.id,
+      framePrice: product.price.toString(),
+      lensPrice: lensPrice.toString(),
+      totalPrice: totalPrice.toString(),
+      lensSelection: getSelectedLensName(),
+    });
+    router.push(`/checkout?${query.toString()}`);
+  }
+
   const handleBuyNowClick = () => {
     const isEyewear = product.category === 'Eyewear';
     const isLensSelected = selectedLensId !== 'zero';
@@ -164,7 +135,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     if (isEyewear && isLensSelected) {
       setIsPrescriptionModalOpen(true);
     } else {
-      router.push('/checkout');
+      handleBuyNow();
     }
   };
   
@@ -180,7 +151,7 @@ export default function ProductPage({ params }: ProductPageProps) {
       return `${selectedLens.name} - ${subLensName} (${selectedTintedGlassOption.name} Tint)`;
     }
     
-    return `${selectedLens.name} - ${subLensName}`;
+    return `${selectedLens.name} ${subLensName ? `- ${subLensName}`: ''}`;
   }
 
   return (
@@ -377,6 +348,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         onClose={() => setIsPrescriptionModalOpen(false)}
         productName={product.name}
         lensType={getSelectedLensName()}
+        onProceed={handleBuyNow}
       />
     </div>
   );
