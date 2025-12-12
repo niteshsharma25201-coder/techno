@@ -41,13 +41,13 @@ export default function PrescriptionModal({
     // In a real app, you would save the prescription data
     // to the cart/order state before navigating.
     const prescriptionData: any = {
-        leftEye,
         rightEye,
+        leftEye,
     };
 
     if (isProgressiveOrBifocal) {
-        prescriptionData.leftEyeNV = leftEyeNV;
         prescriptionData.rightEyeNV = rightEyeNV;
+        prescriptionData.leftEyeNV = leftEyeNV;
     }
 
     console.log({
