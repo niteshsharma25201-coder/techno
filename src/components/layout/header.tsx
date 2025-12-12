@@ -153,30 +153,30 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        {!showMobileSearch && (
-          <Link href="/" className="mr-4 flex items-center space-x-2">
-            <Eye className="h-6 w-6 text-primary" />
-            <span className="font-bold font-headline hidden sm:inline-block">Technoii Optics</span>
-          </Link>
-        )}
+        <Link href="/" className="mr-auto flex items-center space-x-2">
+          <Eye className="h-6 w-6 text-primary" />
+          <span className="font-bold font-headline">Technoii Optics</span>
+        </Link>
         {isMobile ? (
-          <div className="flex-1 flex justify-end items-center gap-2">
-            {showMobileSearch ? (
-               <div className="w-full relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search products..."
-                  className="pl-9 w-full bg-card"
-                  onBlur={() => setShowMobileSearch(false)}
-                  autoFocus
-                />
-              </div>
-            ) : (
-              <Button variant="ghost" size="icon" onClick={() => setShowMobileSearch(true)}>
-                <Search />
-                <span className="sr-only">Open search</span>
-              </Button>
-            )}
+          <div className="flex items-center gap-2">
+             <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Search />
+                  <span className="sr-only">Open search</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="top">
+                <div className="w-full relative mt-4">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search products..."
+                    className="pl-9 w-full bg-card"
+                    autoFocus
+                  />
+                </div>
+              </SheetContent>
+            </Sheet>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -197,7 +197,7 @@ export default function Header() {
         ) : (
           <>
             <nav className="flex-1">
-              <ul className="flex items-center space-x-6">
+              <ul className="flex items-center justify-center space-x-6">
                 {renderNavLinks()}
               </ul>
             </nav>
