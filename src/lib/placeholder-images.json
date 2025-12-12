@@ -2,21 +2,27 @@
   "placeholderImages": [
     {
       "id": "hero-1",
-      "description": "Stylish person wearing sunglasses",
-      "imageUrl": "https://images.unsplash.com/photo-1732615840503-4a09161c671d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5nbGFzc2VzJTIwbW9kZWx8ZW58MHx8fHwxNzY1NDc3NDAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Stylish woman wearing sunglasses in a cityscape",
+      "imageUrl": "https://images.unsplash.com/photo-1577803645773-f1245c48325a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdW5nbGFzc2VzJTIwbW9kZWx8ZW58MHx8fHwxNzY1NTU1MjA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "sunglasses model"
     },
     {
       "id": "hero-2",
-      "description": "Sunglasses resting on a sandy beach",
-      "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdW5nbGFzc2VzJTIwYmVhY2h8ZW58MHx8fHwxNzY1NTU1MjA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "sunglasses beach"
+      "description": "Close-up of a person wearing modern, clear-lens eyewear",
+      "imageUrl": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbnwwfHx8fDE3NjU1NTUyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "eyewear model"
     },
     {
       "id": "hero-3",
-      "description": "Woman trying on glasses",
-      "imageUrl": "https://images.unsplash.com/photo-1574258485611-b35445d41870?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0cnlpbmclMjBnbGFzc2VzfGVufDB8fHx8MTc2NTU1NTI2OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "trying glasses"
+      "description": "Man wearing stylish sunglasses outdoors",
+      "imageUrl": "https://images.unsplash.com/photo-1517702814239-e587214a381f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzdW5nbGFzc2VzJTIwbWFufGVufDB8fHx8MTc2NTU1NTYxNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man sunglasses"
+    },
+    {
+      "id": "hero-4",
+      "description": "A collection of different styles of eyewear on a clean background",
+      "imageUrl": "https://images.unsplash.com/photo-1627192239691-2f7d549a9307?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxleWV3ZWFyJTIwY29sbGVjdGlvbnxlbnwwfHx8fDE3NjU1NTU2OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "eyewear collection"
     },
     {
       "id": "product-1",
