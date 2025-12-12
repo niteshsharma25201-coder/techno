@@ -1,6 +1,6 @@
 import type { Product } from './types';
 
-export const brands = ['Ray-Ban', 'Oakley', 'Gucci', 'Prada', 'Technoii', 'Titan', 'Fastrack', 'Laureldale Eyewear', 'NVG', 'X- Ford'];
+export const brands = ['Ray-Ban', 'Technoii', 'Titan', 'Fastrack', 'Laureldale Eyewear', 'NVG', 'X- Ford'];
 export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular', 'Sport'];
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
 export const lensTypes = ['Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
