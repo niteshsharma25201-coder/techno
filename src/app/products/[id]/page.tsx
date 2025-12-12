@@ -17,8 +17,6 @@ import ProductReviews from '@/components/products/product-reviews';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronsUpDown } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -48,10 +46,23 @@ const singleVisionSubOptions = [
     { id: 'sv-tinted-glass', name: 'Tinted Glass', price: 50 },
 ];
 
+const progressiveSubOptions = [
+    { id: 'prog-standard', name: 'Standard Progressive', price: 100 },
+    { id: 'prog-digital', name: 'Digital Progressive', price: 150 },
+    { id: 'prog-hd', name: 'HD Progressive', price: 200 },
+];
+
+const bifocalSubOptions = [
+    { id: 'bifocal-flattop', name: 'Flat-Top Bifocal', price: 70 },
+    { id: 'bifocal-blended', name: 'Blended Bifocal', price: 110 },
+];
+
 export default function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.id === params.id);
   const [selectedLensId, setSelectedLensId] = useState(lensOptions[0].id);
   const [selectedSingleVisionId, setSelectedSingleVisionId] = useState<string | null>(null);
+  const [selectedProgressiveId, setSelectedProgressiveId] = useState<string | null>(null);
+  const [selectedBifocalId, setSelectedBifocalId] = useState<string | null>(null);
 
   if (!product) {
     notFound();
@@ -60,20 +71,36 @@ export default function ProductPage({ params }: ProductPageProps) {
   const image = PlaceHolderImages.find((p) => p.id === product.imagePlaceholderId);
   
   const selectedLens = lensOptions.find(l => l.id === selectedLensId) || lensOptions[0];
+  
   const selectedSingleVisionLens = selectedLensId === 'single-vision' 
     ? singleVisionSubOptions.find(sv => sv.id === selectedSingleVisionId)
     : null;
 
-  const totalPrice = product.price + selectedLens.price + (selectedSingleVisionLens?.price ?? 0);
+  const selectedProgressiveLens = selectedLensId === 'progressive'
+    ? progressiveSubOptions.find(p => p.id === selectedProgressiveId)
+    : null;
+    
+  const selectedBifocalLens = selectedLensId === 'bifocal'
+    ? bifocalSubOptions.find(b => b.id === selectedBifocalId)
+    : null;
+
+  const totalPrice = product.price + selectedLens.price 
+    + (selectedSingleVisionLens?.price ?? 0)
+    + (selectedProgressiveLens?.price ?? 0)
+    + (selectedBifocalLens?.price ?? 0);
 
   const handleMainLensChange = (value: string) => {
     setSelectedLensId(value);
-    // Reset sub-selection if main lens type changes away from single vision
-    if (value !== 'single-vision') {
-        setSelectedSingleVisionId(null);
-    } else {
-        // Default to first sub-option when single-vision is selected
+    setSelectedSingleVisionId(null);
+    setSelectedProgressiveId(null);
+    setSelectedBifocalId(null);
+
+    if (value === 'single-vision') {
         setSelectedSingleVisionId(singleVisionSubOptions[0].id);
+    } else if (value === 'progressive') {
+        setSelectedProgressiveId(progressiveSubOptions[0].id);
+    } else if (value === 'bifocal') {
+        setSelectedBifocalId(bifocalSubOptions[0].id);
     }
   };
 
@@ -158,6 +185,43 @@ export default function ProductPage({ params }: ProductPageProps) {
                         </Select>
                     </div>
                 )}
+                
+                {selectedLensId === 'progressive' && (
+                    <div className="pl-4 pr-2 space-y-2">
+                        <Label>Progressive Options</Label>
+                        <Select onValueChange={setSelectedProgressiveId} defaultValue={selectedProgressiveId ?? undefined}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a progressive lens type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {progressiveSubOptions.map(subOption => (
+                                    <SelectItem key={subOption.id} value={subOption.id}>
+                                        {subOption.name} (+ ₹{subOption.price})
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
+                
+                {selectedLensId === 'bifocal' && (
+                    <div className="pl-4 pr-2 space-y-2">
+                        <Label>Bifocal Options</Label>
+                        <Select onValueChange={setSelectedBifocalId} defaultValue={selectedBifocalId ?? undefined}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a bifocal lens type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {bifocalSubOptions.map(subOption => (
+                                    <SelectItem key={subOption.id} value={subOption.id}>
+                                        {subOption.name} (+ ₹{subOption.price})
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
+
 
               </CardContent>
             </Card>
