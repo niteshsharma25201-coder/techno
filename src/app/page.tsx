@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -5,25 +7,50 @@ import PersonalizedRecommendations from '@/components/recommendations/personaliz
 import { products } from '@/lib/products';
 import ProductCard from '@/components/products/product-card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import { useRef } from 'react';
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-1');
+  const heroImages = PlaceHolderImages.filter(p => p.id.startsWith('hero-'));
+
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
 
   return (
     <div className="flex flex-col">
       <section className="relative w-full h-[60vh] text-white">
         <div className="absolute inset-0 bg-primary/80 z-10" />
-        {heroImage && (
-          <Image
-            src={heroImage.imageUrl}
-            alt={heroImage.description}
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint={heroImage.imageHint}
-          />
-        )}
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full h-full"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+          opts={{
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {heroImages.map((image) => (
+              <CarouselItem key={image.id}>
+                <Image
+                  src={image.imageUrl}
+                  alt={image.description}
+                  fill
+                  className="object-cover"
+                  priority={image.id === 'hero-1'}
+                  data-ai-hint={image.imageHint}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
         <div className="relative z-20 flex flex-col items-center justify-center h-full text-center p-4">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
             See the World Differently

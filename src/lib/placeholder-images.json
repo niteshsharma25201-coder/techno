@@ -7,6 +7,18 @@
       "imageHint": "sunglasses model"
     },
     {
+      "id": "hero-2",
+      "description": "Sunglasses resting on a sandy beach",
+      "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdW5nbGFzc2VzJTIwYmVhY2h8ZW58MHx8fHwxNzY1NTU1MjA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunglasses beach"
+    },
+    {
+      "id": "hero-3",
+      "description": "Woman trying on glasses",
+      "imageUrl": "https://images.unsplash.com/photo-1574258485611-b35445d41870?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0cnlpbmclMjBnbGFzc2VzfGVufDB8fHx8MTc2NTU1NTI2OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "trying glasses"
+    },
+    {
       "id": "product-1",
       "description": "Classic aviator sunglasses",
       "imageUrl": "https://images.unsplash.com/photo-1562548726-43b650c82f8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhdmlhdG9yJTIwc3VuZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0NjA2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -69,13 +81,13 @@
     {
       "id": "product-11",
       "description": "Monthly contact lenses",
-      "imageUrl": "https://images.unsplash.com/photo-1620391901754-a44de471e34c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb250YWN0JTIwbGVucyUyMGJveHxlbnwwfHx8fDE3NjU0Nzc0MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620391901754-a44de471e34c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb250YWN0JTIwbGVucyUyMGJveHxlbnwwfHx8fDE3NjU0Nzc0MDJ8MA&ixlibrb-4.1.0&q=80&w=1080",
       "imageHint": "contact lens box"
     },
     {
       "id": "product-12",
       "description": "Blue light blocking glasses",
-      "imageUrl": "https://images.unsplash.com/photo-1726086870011-2d07a5857518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wdXRlciUyMGdsYXNzZXN8ZW58MHx8fHwxNzY1NDc3NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1726086870011-2d07a5857518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wdXRlciUyMGdsYXNzZXN8ZW58MHx8fHwxNzY1NDc3NDAxfDA&ixlibrb-4.1.0&q=80&w=1080",
       "imageHint": "computer glasses"
     }
   ]
