@@ -23,6 +23,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { useAuth, useUser } from '@/firebase';
+import { useState } from 'react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -35,6 +36,7 @@ export default function Header() {
   const pathname = usePathname();
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -151,12 +153,30 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-6 flex items-center space-x-2">
-          <Eye className="h-6 w-6 text-primary" />
-          <span className="font-bold font-headline">Technoii Optics</span>
-        </Link>
+        {!showMobileSearch && (
+          <Link href="/" className="mr-4 flex items-center space-x-2">
+            <Eye className="h-6 w-6 text-primary" />
+            <span className="font-bold font-headline hidden sm:inline-block">Technoii Optics</span>
+          </Link>
+        )}
         {isMobile ? (
-          <div className="flex-1 flex justify-end">
+          <div className="flex-1 flex justify-end items-center gap-2">
+            {showMobileSearch ? (
+               <div className="w-full relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search products..."
+                  className="pl-9 w-full bg-card"
+                  onBlur={() => setShowMobileSearch(false)}
+                  autoFocus
+                />
+              </div>
+            ) : (
+              <Button variant="ghost" size="icon" onClick={() => setShowMobileSearch(true)}>
+                <Search />
+                <span className="sr-only">Open search</span>
+              </Button>
+            )}
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -165,13 +185,7 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
-                <div className="p-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search products..." className="pl-9" />
-                  </div>
-                </div>
-                <nav className="flex flex-col space-y-4 mt-4">
+                <nav className="flex flex-col space-y-4 mt-8">
                   {renderNavLinks(true)}
                   <div className="border-t pt-4 space-y-2">
                     <MobileAuthButtons />
