@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState } from 'react';
@@ -56,7 +57,7 @@ const progressiveSubOptions = [
 
 const bifocalSubOptions = [
     { id: 'bifocal-basic', name: 'Basic', price: 70 },
-    { id: 'bifocal-premium', name: 'Premium', price: 110 },
+    { id: 'bifocal-premium', name 'Premium', price: 110 },
     { id: 'bifocal-super-premium', name: 'Super Premium', price: 150 },
     { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 190 },
     { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 130 },
@@ -173,10 +174,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                   ))}
                 </RadioGroup>
 
-                {selectedLensId === 'single-vision' && (
+                {selectedLensId === 'single-vision' && selectedSingleVisionId && (
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Single Vision Options</Label>
-                        <Select onValueChange={setSelectedSingleVisionId} defaultValue={selectedSingleVisionId ?? undefined}>
+                        <Select onValueChange={setSelectedSingleVisionId} value={selectedSingleVisionId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a single vision lens type" />
                             </SelectTrigger>
@@ -191,10 +192,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                     </div>
                 )}
                 
-                {selectedLensId === 'progressive' && (
+                {selectedLensId === 'progressive' && selectedProgressiveId && (
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Progressive Options</Label>
-                        <Select onValueChange={setSelectedProgressiveId} defaultValue={selectedProgressiveId ?? undefined}>
+                        <Select onValueChange={setSelectedProgressiveId} value={selectedProgressiveId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a progressive lens type" />
                             </SelectTrigger>
@@ -209,10 +210,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                     </div>
                 )}
                 
-                {selectedLensId === 'bifocal' && (
+                {selectedLensId === 'bifocal' && selectedBifocalId && (
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Bifocal Options</Label>
-                        <Select onValueChange={setSelectedBifocalId} defaultValue={selectedBifocalId ?? undefined}>
+                        <Select onValueChange={setSelectedBifocalId} value={selectedBifocalId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a bifocal lens type" />
                             </SelectTrigger>
