@@ -56,7 +56,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           <Badge variant="outline" className="w-fit">{product.category}</Badge>
           <h1 className="text-3xl lg:text-4xl font-bold font-headline">{product.name}</h1>
           <p className="text-3xl font-bold text-primary">₹{product.price}</p>
-          <p className="text-muted-foreground text-lg">{product.description}</p>
+          <p className="text-muted-foreground text-base md:text-lg">{product.description}</p>
           
           <Separator />
 

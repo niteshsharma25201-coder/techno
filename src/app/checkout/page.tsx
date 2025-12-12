@@ -196,7 +196,7 @@ export default function CheckoutPage() {
                           setSelectedPaymentMethod(value);
                         }}
                         defaultValue={field.value}
-                        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-4"
                       >
                         <Label
                           htmlFor="credit-card"
@@ -243,12 +243,12 @@ export default function CheckoutPage() {
                       />
                     )}
                     {(selectedPaymentMethod === 'credit-card' || selectedPaymentMethod === 'debit-card') && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
                          <FormField
                             control={form.control}
                             name="cardNumber"
                             render={({ field }) => (
-                              <FormItem className="md:col-span-2">
+                              <FormItem className="md:col-span-3">
                                 <FormLabel>Card Number</FormLabel>
                                 <FormControl>
                                   <Input placeholder="**** **** **** ****" {...field} />
@@ -261,7 +261,7 @@ export default function CheckoutPage() {
                             control={form.control}
                             name="expiryDate"
                             render={({ field }) => (
-                              <FormItem>
+                              <FormItem className="md:col-span-2">
                                 <FormLabel>Expiry (MM/YY)</FormLabel>
                                 <FormControl>
                                   <Input placeholder="MM/YY" {...field} />
@@ -274,7 +274,7 @@ export default function CheckoutPage() {
                             control={form.control}
                             name="cvc"
                             render={({ field }) => (
-                              <FormItem>
+                              <FormItem className="md:col-span-1">
                                 <FormLabel>CVC</FormLabel>
                                 <FormControl>
                                   <Input placeholder="123" {...field} />
