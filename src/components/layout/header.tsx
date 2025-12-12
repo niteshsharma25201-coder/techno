@@ -187,13 +187,13 @@ export default function Header() {
                 {renderNavLinks()}
               </ul>
             </nav>
-            <div className="flex flex-1 items-center justify-center px-8">
-              <div className="w-full max-w-sm relative">
+            <div className="flex flex-1 items-center justify-end px-4 gap-4">
+              <div className="w-full max-w-xs relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input placeholder="Search products..." className="pl-9" />
               </div>
+              <AuthButtons />
             </div>
-            <AuthButtons />
           </>
         )}
       </div>
