@@ -11,6 +11,7 @@
  * - /roles_admin/{userId}: A lookup collection where the existence of a document
  *   signifies that the user with the corresponding {userId} has administrative privileges.
  * - /products/{productId}/reviews/{reviewId}: Stores user-submitted reviews for products.
+ * - /users/{userId}/orders/{orderId}: Stores order information for each user.
  *
  * Key Security Decisions:
  * - Admin by Existence: Administrator status is determined by the existence of a
@@ -26,6 +27,8 @@
  *   from the start.
  * - Review Moderation: Logged-in users can create reviews, but only they can update
  *   or delete their own reviews. All users can read reviews.
+ * - Order Management: Users can create and view their own orders. Admins can
+ *   view all orders and update their status.
  *
  * Denormalization for Authorization:
  * This ruleset relies on path-based ownership for `/users/{userId}` documents, making
@@ -108,8 +111,7 @@ service cloud.firestore {
 
     /**
      * @description
-     *   Manages user profile documents. Access is strictly controlled, allowing
-     *   users to manage their own data. Admins are granted read-only access.
+     *   Manages user profile documents and their subcollections.
      * @path
      *   /users/{userId}
      */
@@ -119,6 +121,21 @@ service cloud.firestore {
       allow create: if isOwner(userId) && hasCorrectUserIdOnCreate(userId);
       allow update: if isOwner(userId) && resource != null && isUserIdImmutable();
       allow delete: if isOwner(userId) && resource != null;
+
+      /**
+       * @description
+       *   Manages user orders. Users can create and view their own orders.
+       *   Admins can view and update order status.
+       * @path
+       *   /users/{userId}/orders/{orderId}
+       */
+      match /orders/{orderId} {
+        allow read, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId);
+        // Only admins can update orders (e.g., to change status)
+        allow update: if isAdmin();
+        allow delete: if isAdmin();
+      }
     }
 
     /**

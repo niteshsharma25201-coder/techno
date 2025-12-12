@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import { useUser, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -25,6 +28,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { CreditCard, Landmark, Banknote } from 'lucide-react';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 const checkoutSchema = z.object({
   fullName: z.string().min(1, 'Full name is required.'),
@@ -36,7 +41,6 @@ const checkoutSchema = z.object({
   country: z.string().min(1, 'Country is required.'),
   paymentMethod: z.enum(['credit-card', 'debit-card', 'upi']),
   upiId: z.string().optional(),
-  // Add more fields for credit/debit card if needed
   cardNumber: z.string().optional(),
   expiryDate: z.string().optional(),
   cvc: z.string().optional(),
@@ -46,6 +50,10 @@ type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
 export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('credit-card');
+  const router = useRouter();
+  const { user } = useUser();
+  const firestore = useFirestore();
+  const { toast } = useToast();
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
@@ -65,9 +73,57 @@ export default function CheckoutPage() {
     },
   });
 
-  const onSubmit = (data: CheckoutFormValues) => {
-    console.log(data);
-    alert('Order placed successfully! (Check console for form data)');
+  const ordersRef = useMemoFirebase(
+    () => (user ? collection(firestore, 'users', user.uid, 'orders') : null),
+    [firestore, user]
+  );
+
+  const onSubmit = async (data: CheckoutFormValues) => {
+    if (!user || !ordersRef) {
+      toast({
+        variant: 'destructive',
+        title: 'Not Logged In',
+        description: 'You must be logged in to place an order.',
+      });
+      return;
+    }
+
+    try {
+      const orderData = {
+        userId: user.uid,
+        totalAmount: 999, // Replace with actual cart total
+        status: 'Pending',
+        shippingAddress: {
+          fullName: data.fullName,
+          address1: data.address1,
+          address2: data.address2,
+          city: data.city,
+          state: data.state,
+          postalCode: data.postalCode,
+          country: data.country,
+        },
+        paymentMethod: data.paymentMethod,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      const docRef = await addDocumentNonBlocking(ordersRef, orderData);
+      
+      toast({
+        title: 'Order Placed!',
+        description: 'Your order has been successfully placed.',
+      });
+      
+      router.push(`/checkout/confirmation?orderId=${docRef.id}`);
+
+    } catch (error) {
+      console.error("Error placing order: ", error);
+      toast({
+        variant: 'destructive',
+        title: 'Order Failed',
+        description: 'There was a problem placing your order. Please try again.',
+      });
+    }
   };
 
   return (
@@ -288,8 +344,8 @@ export default function CheckoutPage() {
                   </div>
                 </section>
 
-                <Button type="submit" className="w-full" size="lg">
-                  Place Order
+                <Button type="submit" className="w-full" size="lg" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? 'Placing Order...' : 'Place Order'}
                 </Button>
               </form>
             </Form>
