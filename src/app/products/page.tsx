@@ -1,8 +1,19 @@
+
 import { products, brands, styles, materials, lensTypes } from '@/lib/products';
 import ProductFilters from '@/components/products/product-filters';
 import ProductList from '@/components/products/product-list';
 
-export default function ProductsPage() {
+type ProductsPageProps = {
+  searchParams?: {
+    category?: string;
+    brand?: string | string[];
+    style?: string | string[];
+    material?: string | string[];
+    lensType?: string | string[];
+  };
+};
+
+export default function ProductsPage({ searchParams }: ProductsPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 text-center">
@@ -18,10 +29,11 @@ export default function ProductsPage() {
             styles={styles}
             materials={materials}
             lensTypes={lensTypes}
+            searchParams={searchParams}
           />
         </aside>
         <main className="lg:col-span-3">
-          <ProductList allProducts={products} />
+          <ProductList allProducts={products} searchParams={searchParams} />
         </main>
       </div>
     </div>

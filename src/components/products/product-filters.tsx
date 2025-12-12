@@ -1,3 +1,8 @@
+
+'use client';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -8,8 +13,13 @@ type ProductFiltersProps = {
   styles: string[];
   materials: string[];
   lensTypes: string[];
-  // In a real app, these would be controlled by a state management solution
-  // and passed down to ProductList. For this example, filtering is client-side in ProductList.
+  searchParams?: {
+    category?: string;
+    brand?: string | string[];
+    style?: string | string[];
+    material?: string | string[];
+    lensType?: string | string[];
+  };
 };
 
 export default function ProductFilters({
@@ -17,24 +27,58 @@ export default function ProductFilters({
   styles,
   materials,
   lensTypes,
+  searchParams,
 }: ProductFiltersProps) {
-  // This component is for UI display.
-  // The filtering logic is managed in ProductList component for this example.
-  // In a larger app, you'd use state management (like Zustand or Context)
-  // to lift the filter state up.
+  const router = useRouter();
+  const pathname = usePathname();
+  const currentSearchParams = useSearchParams();
 
-  const renderFilterOptions = (items: string[], filterId: string) => (
-    <div className="space-y-2">
-      {items.map((item) => (
-        <div key={item} className="flex items-center space-x-2">
-          <Checkbox id={`${filterId}-${item}`} value={item} />
-          <Label htmlFor={`${filterId}-${item}`} className="font-normal">
-            {item}
-          </Label>
-        </div>
-      ))}
-    </div>
+  const handleFilterChange = useCallback(
+    (filterName: string, value: string, checked: boolean) => {
+      const newParams = new URLSearchParams(currentSearchParams.toString());
+      const allValues = newParams.getAll(filterName);
+
+      if (checked) {
+        if (!allValues.includes(value)) {
+          newParams.append(filterName, value);
+        }
+      } else {
+        newParams.delete(filterName);
+        allValues.filter((v) => v !== value).forEach(v => newParams.append(filterName, v));
+      }
+      
+      router.push(`${pathname}?${newParams.toString()}`);
+    },
+    [currentSearchParams, pathname, router]
   );
+  
+  const getFilterValues = (key: keyof NonNullable<typeof searchParams>): string[] => {
+    const values = searchParams?.[key];
+    if (Array.isArray(values)) return values;
+    if (typeof values === 'string') return [values];
+    return [];
+  };
+
+  const renderFilterOptions = (items: string[], filterId: string) => {
+    const selectedValues = getFilterValues(filterId as any);
+    return (
+        <div className="space-y-2">
+        {items.map((item) => (
+            <div key={item} className="flex items-center space-x-2">
+            <Checkbox
+                id={`${filterId}-${item}`}
+                value={item}
+                checked={selectedValues.includes(item)}
+                onCheckedChange={(checked) => handleFilterChange(filterId, item, !!checked)}
+            />
+            <Label htmlFor={`${filterId}-${item}`} className="font-normal">
+                {item}
+            </Label>
+            </div>
+        ))}
+        </div>
+    );
+  };
 
   return (
     <Card className="sticky top-20">
@@ -42,7 +86,7 @@ export default function ProductFilters({
         <CardTitle>Filters</CardTitle>
       </CardHeader>
       <CardContent>
-        <Accordion type="multiple" defaultValue={['brand', 'style']}>
+        <Accordion type="multiple" defaultValue={['brand', 'style']} className="w-full">
           <AccordionItem value="brand">
             <AccordionTrigger>Brand</AccordionTrigger>
             <AccordionContent>
@@ -64,7 +108,7 @@ export default function ProductFilters({
           <AccordionItem value="lensType">
             <AccordionTrigger>Lens Type</AccordionTrigger>
             <AccordionContent>
-              {renderFilterOptions(lensTypes, 'lens')}
+              {renderFilterOptions(lensTypes, 'lensType')}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
