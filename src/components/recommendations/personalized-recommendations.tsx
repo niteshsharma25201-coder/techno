@@ -73,19 +73,7 @@ export default function PersonalizedRecommendations() {
   }
 
   if (error || recommendations.length === 0) {
-    return (
-        <section className="w-full py-16 lg:py-24">
-            <div className="container mx-auto px-4">
-                <Alert>
-                    <Lightbulb className="h-4 w-4" />
-                    <AlertTitle>No Recommendations</AlertTitle>
-                    <AlertDescription>
-                        {error ? error : "We couldn't find any recommendations for you right now. Please check back later!"}
-                    </AlertDescription>
-                </Alert>
-            </div>
-        </section>
-    )
+    return null;
   }
 
   return (
