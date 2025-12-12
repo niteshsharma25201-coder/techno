@@ -55,8 +55,11 @@ const progressiveSubOptions = [
 ];
 
 const bifocalSubOptions = [
-    { id: 'bifocal-flattop', name: 'Flat-Top Bifocal', price: 70 },
-    { id: 'bifocal-blended', name: 'Blended Bifocal', price: 110 },
+    { id: 'bifocal-basic', name: 'Basic', price: 70 },
+    { id: 'bifocal-premium', name: 'Premium', price: 110 },
+    { id: 'bifocal-super-premium', name: 'Super Premium', price: 150 },
+    { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 190 },
+    { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 130 },
 ];
 
 export default function ProductPage({ params }: ProductPageProps) {
