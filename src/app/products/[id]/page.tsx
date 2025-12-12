@@ -17,6 +17,8 @@ import ProductReviews from '@/components/products/product-reviews';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronsUpDown } from 'lucide-react';
 
 type ProductPageProps = {
   params: {
@@ -31,9 +33,18 @@ const lensOptions = [
   { id: 'bifocal', name: 'Bifocal', price: 80 },
 ];
 
+const singleVisionSubOptions = [
+    { id: 'sv-basic', name: 'Basic', price: 20 },
+    { id: 'sv-premium', name: 'Premium', price: 40 },
+    { id: 'sv-super-premium', name: 'Super Premium', price: 60 },
+    { id: 'sv-premium-thin', name: 'Premium Thin', price: 80 },
+    { id: 'sv-tinted-glass', name: 'Tinted Glass', price: 50 },
+];
+
 export default function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.id === params.id);
   const [selectedLensId, setSelectedLensId] = useState(lensOptions[0].id);
+  const [selectedSingleVisionId, setSelectedSingleVisionId] = useState<string | null>(null);
 
   if (!product) {
     notFound();
@@ -42,7 +53,22 @@ export default function ProductPage({ params }: ProductPageProps) {
   const image = PlaceHolderImages.find((p) => p.id === product.imagePlaceholderId);
   
   const selectedLens = lensOptions.find(l => l.id === selectedLensId) || lensOptions[0];
-  const totalPrice = product.price + selectedLens.price;
+  const selectedSingleVisionLens = selectedLensId === 'single-vision' 
+    ? singleVisionSubOptions.find(sv => sv.id === selectedSingleVisionId)
+    : null;
+
+  const totalPrice = product.price + selectedLens.price + (selectedSingleVisionLens?.price ?? 0);
+
+  const handleMainLensChange = (value: string) => {
+    setSelectedLensId(value);
+    // Reset sub-selection if main lens type changes away from single vision
+    if (value !== 'single-vision') {
+        setSelectedSingleVisionId(null);
+    } else {
+        // Default to first sub-option when single-vision is selected
+        setSelectedSingleVisionId(singleVisionSubOptions[0].id);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
@@ -87,24 +113,54 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <CardTitle>Select Your Lens</CardTitle>
               </CardHeader>
               <CardContent>
-                <RadioGroup value={selectedLensId} onValueChange={setSelectedLensId}>
+                <RadioGroup value={selectedLensId} onValueChange={handleMainLensChange}>
                   {lensOptions.map((lens) => (
-                    <Label
-                      key={lens.id}
-                      htmlFor={lens.id}
-                      className={cn(
-                        'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground',
-                        selectedLensId === lens.id && 'border-primary'
-                      )}
-                    >
-                      <div className="flex items-center gap-3">
-                        <RadioGroupItem value={lens.id} id={lens.id} />
-                        <span>{lens.name}</span>
+                    <Collapsible key={lens.id} asChild>
+                      <div>
+                        <div className={cn(
+                          'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground',
+                           selectedLensId === lens.id && 'border-primary'
+                        )}>
+                            <Label htmlFor={lens.id} className="flex items-center gap-3 w-full cursor-pointer">
+                                <RadioGroupItem value={lens.id} id={lens.id} />
+                                <span>{lens.name}</span>
+                            </Label>
+                            <div className="flex items-center gap-4">
+                                <span className="font-semibold shrink-0">
+                                    {lens.price > 0 ? `+ ₹${lens.price}` : 'Included'}
+                                </span>
+                                {lens.id === 'single-vision' && (
+                                    <CollapsibleTrigger asChild>
+                                        <Button variant="ghost" size="sm" className="w-9 p-0" disabled={selectedLensId !== 'single-vision'}>
+                                            <ChevronsUpDown className="h-4 w-4" />
+                                            <span className="sr-only">Toggle</span>
+                                        </Button>
+                                    </CollapsibleTrigger>
+                                )}
+                            </div>
+                        </div>
+                        {lens.id === 'single-vision' && (
+                            <CollapsibleContent className="py-2 pl-4 pr-2 space-y-2">
+                                 <RadioGroup value={selectedSingleVisionId ?? ''} onValueChange={setSelectedSingleVisionId}>
+                                    {singleVisionSubOptions.map(subOption => (
+                                        <Label key={subOption.id} htmlFor={subOption.id} className={cn(
+                                            'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-3 pl-4 hover:bg-accent hover:text-accent-foreground',
+                                            selectedSingleVisionId === subOption.id && 'border-primary/50'
+                                        )}>
+                                            <div className="flex items-center gap-3">
+                                                <RadioGroupItem value={subOption.id} id={subOption.id} />
+                                                <span>{subOption.name}</span>
+                                            </div>
+                                            <span className="font-semibold">
+                                                + ₹{subOption.price}
+                                            </span>
+                                        </Label>
+                                    ))}
+                                </RadioGroup>
+                            </CollapsibleContent>
+                        )}
                       </div>
-                      <span className="font-semibold">
-                        {lens.price > 0 ? `+ ₹${lens.price}` : 'Included'}
-                      </span>
-                    </Label>
+                    </Collapsible>
                   ))}
                 </RadioGroup>
               </CardContent>
