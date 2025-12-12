@@ -29,19 +29,33 @@ export default function PrescriptionModal({
   lensType,
 }: PrescriptionModalProps) {
   const router = useRouter();
-  const [leftEye, setLeftEye] = useState('');
   const [rightEye, setRightEye] = useState('');
+  const [leftEye, setLeftEye] = useState('');
+  const [rightEyeNV, setRightEyeNV] = useState('');
+  const [leftEyeNV, setLeftEyeNV] = useState('');
   const [prescriptionFile, setPrescriptionFile] = useState<File | null>(null);
+
+  const isProgressiveOrBifocal = lensType.toLowerCase().includes('progressive') || lensType.toLowerCase().includes('bifocal');
 
   const handleProceed = () => {
     // In a real app, you would save the prescription data
     // to the cart/order state before navigating.
+    const prescriptionData: any = {
+        leftEye,
+        rightEye,
+    };
+
+    if (isProgressiveOrBifocal) {
+        prescriptionData.leftEyeNV = leftEyeNV;
+        prescriptionData.rightEyeNV = rightEyeNV;
+    }
+
     console.log({
       productName,
       lensType,
       prescription: prescriptionFile
         ? { fileName: prescriptionFile.name }
-        : { leftEye, rightEye },
+        : prescriptionData,
     });
     router.push('/checkout');
   };
@@ -98,6 +112,28 @@ export default function PrescriptionModal({
                   onChange={(e) => setLeftEye(e.target.value)}
                 />
               </div>
+              {isProgressiveOrBifocal && (
+                <>
+                    <div className="space-y-2">
+                        <Label htmlFor="right-eye-nv">Right Eye (NV-OD)</Label>
+                        <Input
+                        id="right-eye-nv"
+                        placeholder="e.g., +1.25"
+                        value={rightEyeNV}
+                        onChange={(e) => setRightEyeNV(e.target.value)}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="left-eye-nv">Left Eye (NV-OS)</Label>
+                        <Input
+                        id="left-eye-nv"
+                        placeholder="e.g., +1.50"
+                        value={leftEyeNV}
+                        onChange={(e) => setLeftEyeNV(e.target.value)}
+                        />
+                    </div>
+                </>
+              )}
             </div>
           </div>
         </div>
