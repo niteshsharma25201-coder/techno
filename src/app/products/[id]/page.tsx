@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { products } from '@/lib/products';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import VirtualTryOn from '@/components/virtual-try-on';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, ShoppingBag } from 'lucide-react';
 
 type ProductPageProps = {
   params: {
@@ -67,10 +68,18 @@ export default function ProductPage({ params }: ProductPageProps) {
           <Separator />
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button size="lg" className="flex-1">
+            <Button size="lg" className="flex-1" asChild>
+              <Link href="/checkout">
+                <ShoppingBag className="mr-2" />
+                Buy Now
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="flex-1">
               <ShoppingCart className="mr-2" />
               Add to Cart
             </Button>
+          </div>
+          <div className="mt-4">
             <VirtualTryOn />
           </div>
         </div>
