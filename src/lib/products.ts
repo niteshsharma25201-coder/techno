@@ -1,3 +1,4 @@
+
 import type { Product } from './types';
 
 export const brands = ['Ray-Ban', 'Technoii', 'Titan', 'Fastrack', 'Laureldale Eyewear', 'NVG', 'X- Ford'];
@@ -25,7 +26,7 @@ export const products: Product[] = [
     price: 180,
     imagePlaceholderId: 'product-2',
     category: 'Sunglasses',
-    brand: 'Oakley',
+    brand: 'Fastrack',
     style: 'Wayfarer',
     material: 'Acetate',
     lensType: 'Polarized',
@@ -37,7 +38,7 @@ export const products: Product[] = [
     price: 220,
     imagePlaceholderId: 'product-3',
     category: 'Eyewear',
-    brand: 'Prada',
+    brand: 'Laureldale Eyewear',
     style: 'Cat Eye',
     material: 'Acetate',
     lensType: 'Non-Polarized',
@@ -73,7 +74,7 @@ export const products: Product[] = [
     price: 250,
     imagePlaceholderId: 'product-6',
     category: 'Sunglasses',
-    brand: 'Oakley',
+    brand: 'NVG',
     style: 'Sport',
     material: 'Plastic',
     lensType: 'Mirrored',
@@ -109,7 +110,7 @@ export const products: Product[] = [
     price: 165,
     imagePlaceholderId: 'product-9',
     category: 'Eyewear',
-    brand: 'Gucci',
+    brand: 'Titan',
     style: 'Rectangular',
     material: 'Metal',
     lensType: 'Non-Polarized',
@@ -121,7 +122,7 @@ export const products: Product[] = [
     price: 350,
     imagePlaceholderId: 'product-10',
     category: 'Sunglasses',
-    brand: 'Gucci',
+    brand: 'X- Ford',
     style: 'Cat Eye',
     material: 'Acetate',
     lensType: 'Gradient',
