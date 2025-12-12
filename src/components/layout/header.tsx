@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Eye, Menu, LogOut } from 'lucide-react';
+import { Eye, Menu, LogOut, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
@@ -164,7 +165,13 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
-                <nav className="flex flex-col space-y-4 mt-8">
+                <div className="p-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder="Search products..." className="pl-9" />
+                  </div>
+                </div>
+                <nav className="flex flex-col space-y-4 mt-4">
                   {renderNavLinks(true)}
                   <div className="border-t pt-4 space-y-2">
                     <MobileAuthButtons />
@@ -180,6 +187,12 @@ export default function Header() {
                 {renderNavLinks()}
               </ul>
             </nav>
+            <div className="flex flex-1 items-center justify-center px-8">
+              <div className="w-full max-w-sm relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input placeholder="Search products..." className="pl-9" />
+              </div>
+            </div>
             <AuthButtons />
           </>
         )}
