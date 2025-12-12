@@ -81,21 +81,21 @@ export default function PrescriptionModal({
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="left-eye">Left Eye (DV-OD)</Label>
-                <Input
-                  id="left-eye"
-                  placeholder="e.g., -2.00"
-                  value={leftEye}
-                  onChange={(e) => setLeftEye(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="right-eye">Right Eye (DV-OS)</Label>
+                <Label htmlFor="right-eye">Right Eye (DV-OD)</Label>
                 <Input
                   id="right-eye"
                   placeholder="e.g., -1.75"
                   value={rightEye}
                   onChange={(e) => setRightEye(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="left-eye">Left Eye (DV-OS)</Label>
+                <Input
+                  id="left-eye"
+                  placeholder="e.g., -2.00"
+                  value={leftEye}
+                  onChange={(e) => setLeftEye(e.target.value)}
                 />
               </div>
             </div>
