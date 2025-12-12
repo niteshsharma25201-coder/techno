@@ -35,7 +35,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth, useUser } from '@/firebase';
 import { useState } from 'react';
 
@@ -63,9 +63,18 @@ const shopSubLinks = [
 export default function Header() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
+  const router = useRouter();
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
+      // Optionally close mobile search sheet if open
+    }
+  };
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -282,6 +291,18 @@ export default function Header() {
     );
   };
 
+  const SearchBar = () => (
+    <form onSubmit={handleSearchSubmit} className="w-full relative">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <Input
+        placeholder="Search products..."
+        className="pl-9 w-full bg-card"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+    </form>
+  );
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
@@ -300,12 +321,7 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="top">
                 <div className="w-full relative mt-4">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search products..."
-                    className="pl-9 w-full bg-card"
-                    autoFocus
-                  />
+                  <SearchBar />
                 </div>
               </SheetContent>
             </Sheet>
@@ -335,8 +351,7 @@ export default function Header() {
             </nav>
             <div className="flex flex-1 items-center justify-end px-4 gap-4">
               <div className="w-full max-w-xs relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search products..." className="pl-9" />
+                <SearchBar />
               </div>
               <AuthButtons />
             </div>

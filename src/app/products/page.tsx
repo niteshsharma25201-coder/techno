@@ -5,6 +5,7 @@ import ProductList from '@/components/products/product-list';
 
 type ProductsPageProps = {
   searchParams?: {
+    q?: string;
     category?: string;
     brand?: string | string[];
     style?: string | string[];
@@ -14,12 +15,18 @@ type ProductsPageProps = {
 };
 
 export default function ProductsPage({ searchParams }: ProductsPageProps) {
+  const searchTerm = searchParams?.q || '';
+
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline">Our Collection</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline">
+          {searchTerm ? `Searching for "${searchTerm}"` : 'Our Collection'}
+        </h1>
         <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-          Explore our wide range of sunglasses, eyewear, and lenses. Use the filters to find your perfect match.
+          {searchTerm
+            ? `Showing results for your search.`
+            : `Explore our wide range of sunglasses, eyewear, and lenses. Use the filters to find your perfect match.`}
         </p>
       </header>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

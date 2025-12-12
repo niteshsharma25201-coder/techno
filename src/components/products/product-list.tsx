@@ -10,6 +10,7 @@ import { SearchX } from 'lucide-react';
 type ProductListProps = {
   allProducts: Product[];
   searchParams?: {
+    q?: string;
     category?: string;
     brand?: string | string[];
     style?: string | string[];
@@ -22,28 +23,37 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
 
   const filteredProducts = useMemo(() => {
     let products = allProducts;
+    const { q, category, brand, style, material, lensType } = searchParams || {};
 
-    if (searchParams) {
-      if (searchParams.category) {
-        products = products.filter(p => p.category === searchParams.category);
-      }
-      
-      const filterByParam = (key: keyof typeof searchParams) => {
-        const value = searchParams[key];
-        if (value && value.length > 0) {
-          const values = Array.isArray(value) ? value : [value];
-          products = products.filter(p => {
-             const productValue = p[key as keyof Product];
-             return typeof productValue === 'string' && values.includes(productValue);
-          });
-        }
-      };
-
-      filterByParam('brand');
-      filterByParam('style');
-      filterByParam('material');
-      filterByParam('lensType');
+    if (q) {
+      const searchTerm = q.toLowerCase();
+      products = products.filter(p => 
+        p.name.toLowerCase().includes(searchTerm) ||
+        p.description.toLowerCase().includes(searchTerm) ||
+        p.brand.toLowerCase().includes(searchTerm) ||
+        p.category.toLowerCase().includes(searchTerm)
+      );
     }
+    
+    if (category) {
+      products = products.filter(p => p.category === category);
+    }
+    
+    const filterByParam = (key: 'brand' | 'style' | 'material' | 'lensType') => {
+      const value = searchParams?.[key];
+      if (value && value.length > 0) {
+        const values = Array.isArray(value) ? value : [value];
+        products = products.filter(p => {
+            const productValue = p[key as keyof Product];
+            return typeof productValue === 'string' && values.includes(productValue);
+        });
+      }
+    };
+
+    filterByParam('brand');
+    filterByParam('style');
+    filterByParam('material');
+    filterByParam('lensType');
     
     return products;
   }, [allProducts, searchParams]);
@@ -54,7 +64,7 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
         <SearchX className="h-4 w-4" />
         <AlertTitle>No Products Found</AlertTitle>
         <AlertDescription>
-          Try adjusting your filters or check back later.
+          Try adjusting your search or filters.
         </AlertDescription>
       </Alert>
     );
