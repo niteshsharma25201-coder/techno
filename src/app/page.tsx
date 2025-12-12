@@ -57,16 +57,18 @@ export default function Home() {
           }}
         >
           <CarouselContent>
-            {heroImages.map((image) => (
+            {heroImages.map((image, index) => (
               <CarouselItem key={image.id}>
-                <Image
-                  src={image.imageUrl}
-                  alt={image.description}
-                  fill
-                  className="object-cover"
-                  priority={image.id === 'hero-1'}
-                  data-ai-hint={image.imageHint}
-                />
+                <div className="relative h-[70vh] w-full">
+                  <Image
+                    src={image.imageUrl}
+                    alt={image.description}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                    data-ai-hint={image.imageHint}
+                  />
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>
