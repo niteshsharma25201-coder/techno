@@ -19,6 +19,13 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronsUpDown } from 'lucide-react';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from '@/components/ui/select';
 
 type ProductPageProps = {
   params: {
@@ -112,11 +119,10 @@ export default function ProductPage({ params }: ProductPageProps) {
               <CardHeader>
                 <CardTitle>Select Your Lens</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-4">
                 <RadioGroup value={selectedLensId} onValueChange={handleMainLensChange}>
                   {lensOptions.map((lens) => (
-                    <Collapsible key={lens.id} asChild>
-                      <div>
+                    <div key={lens.id}>
                         <div className={cn(
                           'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground',
                            selectedLensId === lens.id && 'border-primary'
@@ -129,40 +135,30 @@ export default function ProductPage({ params }: ProductPageProps) {
                                 <span className="font-semibold shrink-0">
                                     {lens.price > 0 ? `+ ₹${lens.price}` : 'Included'}
                                 </span>
-                                {lens.id === 'single-vision' && (
-                                    <CollapsibleTrigger asChild>
-                                        <Button variant="ghost" size="sm" className="w-9 p-0" disabled={selectedLensId !== 'single-vision'}>
-                                            <ChevronsUpDown className="h-4 w-4" />
-                                            <span className="sr-only">Toggle</span>
-                                        </Button>
-                                    </CollapsibleTrigger>
-                                )}
                             </div>
                         </div>
-                        {lens.id === 'single-vision' && (
-                            <CollapsibleContent className="py-2 pl-4 pr-2 space-y-2">
-                                 <RadioGroup value={selectedSingleVisionId ?? ''} onValueChange={setSelectedSingleVisionId}>
-                                    {singleVisionSubOptions.map(subOption => (
-                                        <Label key={subOption.id} htmlFor={subOption.id} className={cn(
-                                            'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-3 pl-4 hover:bg-accent hover:text-accent-foreground',
-                                            selectedSingleVisionId === subOption.id && 'border-primary/50'
-                                        )}>
-                                            <div className="flex items-center gap-3">
-                                                <RadioGroupItem value={subOption.id} id={subOption.id} />
-                                                <span>{subOption.name}</span>
-                                            </div>
-                                            <span className="font-semibold">
-                                                + ₹{subOption.price}
-                                            </span>
-                                        </Label>
-                                    ))}
-                                </RadioGroup>
-                            </CollapsibleContent>
-                        )}
                       </div>
-                    </Collapsible>
                   ))}
                 </RadioGroup>
+
+                {selectedLensId === 'single-vision' && (
+                    <div className="pl-4 pr-2 space-y-2">
+                        <Label>Single Vision Options</Label>
+                        <Select onValueChange={setSelectedSingleVisionId} defaultValue={selectedSingleVisionId ?? undefined}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a single vision lens type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {singleVisionSubOptions.map(subOption => (
+                                    <SelectItem key={subOption.id} value={subOption.id}>
+                                        {subOption.name} (+ ₹{subOption.price})
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
+
               </CardContent>
             </Card>
           )}
