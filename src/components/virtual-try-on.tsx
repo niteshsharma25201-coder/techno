@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -11,11 +12,62 @@ import {
   DialogFooter,
   DialogClose,
 } from '@/components/ui/dialog';
-import { Camera, X } from 'lucide-react';
+import { Camera, X, VideoOff } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 export default function VirtualTryOn() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const getCameraPermission = async () => {
+      if (isOpen) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          streamRef.current = stream;
+          setHasCameraPermission(true);
+
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        } catch (error) {
+          console.error('Error accessing camera:', error);
+          setHasCameraPermission(false);
+          toast({
+            variant: 'destructive',
+            title: 'Camera Access Denied',
+            description: 'Please enable camera permissions in your browser settings to use this feature.',
+          });
+        }
+      } else {
+        // Cleanup when dialog is closed
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop());
+          streamRef.current = null;
+        }
+        if(videoRef.current) {
+            videoRef.current.srcObject = null;
+        }
+        setHasCameraPermission(null);
+      }
+    };
+
+    getCameraPermission();
+
+    return () => {
+      // Cleanup on component unmount
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [isOpen, toast]);
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="lg" className="flex-1">
           <Camera className="mr-2" />
@@ -29,13 +81,29 @@ export default function VirtualTryOn() {
             See how these glasses look on you! Allow camera access to begin.
           </DialogDescription>
         </DialogHeader>
-        <div className="aspect-square w-full bg-muted rounded-md flex flex-col items-center justify-center text-center p-4">
-          <Camera className="h-16 w-16 text-muted-foreground mb-4" />
-          <p className="text-muted-foreground">Camera feed would appear here.</p>
-          <p className="text-xs text-muted-foreground/80 mt-2">
-            This is a UI demonstration of the Virtual Try-On feature.
-          </p>
+        <div className="relative aspect-square w-full bg-muted rounded-md flex flex-col items-center justify-center text-center p-4 overflow-hidden">
+          <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" autoPlay muted playsInline />
+          {hasCameraPermission === false && (
+             <div className="z-10 bg-muted/80 p-4 rounded-md">
+                <VideoOff className="h-16 w-16 text-muted-foreground mb-4" />
+                <p className="text-muted-foreground">Camera access is required.</p>
+             </div>
+          )}
+           {hasCameraPermission === null && (
+             <div className="z-10">
+                <Camera className="h-16 w-16 text-muted-foreground mb-4" />
+                <p className="text-muted-foreground">Requesting camera access...</p>
+             </div>
+          )}
         </div>
+        {hasCameraPermission === false && (
+             <Alert variant="destructive">
+              <AlertTitle>Camera Access Required</AlertTitle>
+              <AlertDescription>
+                Please allow camera access in your browser settings to use this feature.
+              </AlertDescription>
+            </Alert>
+        )}
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" variant="secondary">
