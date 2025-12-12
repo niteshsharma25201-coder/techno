@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { notFound, useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { products } from '@/lib/products';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -24,6 +22,7 @@ import {
   } from '@/components/ui/select';
 import PrescriptionModal from '@/components/products/prescription-modal';
 import { lensOptions, singleVisionSubOptions, progressiveSubOptions, bifocalSubOptions, tintedGlassSubOptions, progressiveTintedGlassSubOptions } from '@/lib/lenses';
+import ProductImageGallery from '@/components/products/product-image-gallery';
 
 
 type ProductPageProps = {
@@ -60,9 +59,6 @@ export default function ProductPage({ params }: ProductPageProps) {
       setSelectedTintedGlassType(null);
     }
   }, [isTintedGlassSelected, selectedTintedGlassType]);
-
-
-  const image = PlaceHolderImages.find((p) => p.id === product.imagePlaceholderId);
   
   const selectedLens = lensOptions.find(l => l.id === selectedLensId) || lensOptions[0];
   
@@ -157,23 +153,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-        <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden shadow-lg">
-          {image ? (
-            <Image
-              src={image.imageUrl}
-              alt={product.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1023px) 100vw, 50vw"
-              priority
-              data-ai-hint={image.imageHint}
-            />
-          ) : (
-            <div className="w-full h-full bg-muted flex items-center justify-center">
-              <span className="text-muted-foreground">No Image Available</span>
-            </div>
-          )}
-        </div>
+        <ProductImageGallery product={product} />
         <div className="flex flex-col gap-4">
           <Badge variant="outline" className="w-fit">{product.category}</Badge>
           <h1 className="text-3xl lg:text-4xl font-bold font-headline">{product.name}</h1>

@@ -43,6 +43,30 @@
       "imageHint": "aviator sunglasses"
     },
     {
+      "id": "product-1-thumb-1",
+      "description": "Classic aviator sunglasses on a white background",
+      "imageUrl": "https://images.unsplash.com/photo-1733154286760-751f2ac81335?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhdmlhdG9yJTIwc3VuZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0NjA2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aviator sunglasses"
+    },
+    {
+      "id": "product-1-thumb-2",
+      "description": "Side view of classic aviator sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1757594458709-7a4f4248b515?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhdmlhdG9yJTIwc3VuZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0NjA2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aviator sunglasses"
+    },
+    {
+      "id": "product-1-thumb-3",
+      "description": "Front view of classic aviator sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1733154286760-751f2ac81335?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhdmlhdG9yJTIwc3VuZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0NjA2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aviator sunglasses"
+    },
+    {
+      "id": "product-1-thumb-4",
+      "description": "Folded classic aviator sunglasses",
+      "imageUrl": "https://images.unsplash.com/photo-1757594458622-c256b1fb0225?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhdmlhdG9yJTIwc3VuZ2xhc3Nlc3xlbnwwfHx8fDE3NjU0NjA2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aviator sunglasses"
+    },
+    {
       "id": "product-2",
       "description": "Modern wayfarer sunglasses",
       "imageUrl": "https://images.unsplash.com/photo-1656035378783-d474dad077bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2F5ZmFyZXIlMjBzdW5nbGFzc2VzfGVufDB8fHx8MTc2NTM3ODk2MHww&ixlib=rb-4.1.0&q=80&w=1080",
@@ -75,7 +99,7 @@
     {
       "id": "product-7",
       "description": "Daily disposable contact lenses pack",
-      "imageUrl": "https://images.unsplash.com/photo-1578903279423-9fe363f1f7b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwbGVuc2VzfGVufDB8fHx8MTc2NTQ3NDgxNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1578903279423-9fe363f1f7b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwbGVuc2VzfGVufDB8fHx8MTc2NTQ3NDgxNXww&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "contact lenses"
     },
     {
@@ -93,7 +117,7 @@
     {
       "id": "product-10",
       "description": "Designer brand sunglasses",
-      "imageUrl": "https://images.unsplash.com/photo-1759933253608-ba60cfb8dcf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGVzaWduZXIlMjBzdW5nbGFzc2VzfGVufDB8fHx8MTc2NTQ3NzQwMnww&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1759933253608-ba60cfb8dcf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGVzaWduZXIlMjBzdW5nbGFzc2VzfGVufDB8fHx8MTc2NTQ3NzQwMnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "designer sunglasses"
     },
     {
