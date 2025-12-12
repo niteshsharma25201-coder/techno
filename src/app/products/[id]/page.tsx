@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { products } from '@/lib/products';
@@ -25,6 +25,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from '@/components/ui/select';
+import PrescriptionModal from '@/components/products/prescription-modal';
 
 type ProductPageProps = {
   params: {
@@ -75,12 +76,14 @@ const progressiveTintedGlassSubOptions = [
 
 
 export default function ProductPage({ params }: ProductPageProps) {
+  const router = useRouter();
   const product = products.find((p) => p.id === params.id);
   const [selectedLensId, setSelectedLensId] = useState(lensOptions[0].id);
   const [selectedSingleVisionId, setSelectedSingleVisionId] = useState<string | null>(null);
   const [selectedProgressiveId, setSelectedProgressiveId] = useState<string | null>(null);
   const [selectedBifocalId, setSelectedBifocalId] = useState<string | null>(null);
   const [selectedTintedGlassType, setSelectedTintedGlassType] = useState<'single' | 'double' | null>(null);
+  const [isPrescriptionModalOpen, setIsPrescriptionModalOpen] = useState(false);
 
   if (!product) {
     notFound();
@@ -153,6 +156,32 @@ export default function ProductPage({ params }: ProductPageProps) {
         setSelectedBifocalId(value);
     }
   };
+
+  const handleBuyNowClick = () => {
+    const isEyewear = product.category === 'Eyewear';
+    const isLensSelected = selectedLensId !== 'zero';
+
+    if (isEyewear && isLensSelected) {
+      setIsPrescriptionModalOpen(true);
+    } else {
+      router.push('/checkout');
+    }
+  };
+  
+  const getSelectedLensName = () => {
+    if (selectedLens.id === 'zero') return 'Zero Power';
+
+    let subLensName = '';
+    if (selectedSingleVisionLens) subLensName = selectedSingleVisionLens.name;
+    else if (selectedProgressiveLens) subLensName = selectedProgressiveLens.name;
+    else if (selectedBifocalLens) subLensName = selectedBifocalLens.name;
+
+    if (isTintedGlassSelected && selectedTintedGlassOption) {
+      return `${selectedLens.name} - ${subLensName} (${selectedTintedGlassOption.name} Tint)`;
+    }
+    
+    return `${selectedLens.name} - ${subLensName}`;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
@@ -302,11 +331,9 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button size="lg" className="flex-1" asChild>
-              <Link href="/checkout">
-                <ShoppingBag className="mr-2" />
-                Buy Now
-              </Link>
+            <Button size="lg" className="flex-1" onClick={handleBuyNowClick}>
+              <ShoppingBag className="mr-2" />
+              Buy Now
             </Button>
             <Button size="lg" variant="outline" className="flex-1">
               <ShoppingCart className="mr-2" />
@@ -345,6 +372,13 @@ export default function ProductPage({ params }: ProductPageProps) {
         </div>
       </div>
       <ProductReviews productId={product.id} />
+       <PrescriptionModal
+        isOpen={isPrescriptionModalOpen}
+        onClose={() => setIsPrescriptionModalOpen(false)}
+        productName={product.name}
+        lensType={getSelectedLensName()}
+      />
     </div>
   );
 }
+
