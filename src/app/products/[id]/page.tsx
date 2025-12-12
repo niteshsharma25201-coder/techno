@@ -56,10 +56,10 @@ const progressiveSubOptions = [
 ];
 
 const bifocalSubOptions = [
-    { id: 'bifocal-basic', name: 'Basic', price: 70 },
-    { id: 'bifocal-premium', name: 'Premium', price: 110 },
-    { id: 'bifocal-super-premium', name: 'Super Premium', price: 150 },
-    { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 190 },
+    { id: 'bifocal-basic', name: 'Basic', price: 450 },
+    { id: 'bifocal-premium', name: 'Premium', price: 650 },
+    { id: 'bifocal-super-premium', name: 'Super Premium', price: 1050 },
+    { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 2250 },
     { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 0 },
 ];
 
