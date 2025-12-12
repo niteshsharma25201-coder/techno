@@ -43,7 +43,7 @@ export default function AdminProductsPage() {
                 <TableCell>
                   <Badge variant="outline">{product.category}</Badge>
                 </TableCell>
-                <TableCell>${product.price.toFixed(2)}</TableCell>
+                <TableCell>₹{product.price}</TableCell>
                 <TableCell>{product.brand}</TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>

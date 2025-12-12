@@ -38,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Badge variant="secondary" className="mb-2">{product.category}</Badge>
           <CardTitle className="text-lg font-semibold leading-tight mb-1">{product.name}</CardTitle>
           <p className="text-2xl font-bold text-primary">
-            ${product.price.toFixed(2)}
+            ₹{product.price}
           </p>
         </CardContent>
       </Link>

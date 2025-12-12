@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DollarSign, Users, ShoppingBag, Truck } from 'lucide-react';
+import { IndianRupee, Users, ShoppingBag, Truck } from 'lucide-react';
 
 const stats = [
   {
     title: 'Total Revenue',
-    value: '$45,231.89',
+    value: '₹45,231',
     change: '+20.1% from last month',
-    icon: DollarSign,
+    icon: IndianRupee,
   },
   {
     title: 'New Users',

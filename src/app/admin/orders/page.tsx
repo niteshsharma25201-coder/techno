@@ -13,10 +13,10 @@ import { MoreHorizontal } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 const mockOrders = [
-  { id: 'ORD001', customer: 'John Doe', date: '2023-10-26', status: 'Shipped', total: '$250.00' },
-  { id: 'ORD002', customer: 'Jane Smith', date: '2023-10-25', status: 'Processing', total: '$150.00' },
-  { id: 'ORD003', customer: 'Mike Johnson', date: '2023-10-24', status: 'Delivered', total: '$350.00' },
-  { id: 'ORD004', customer: 'Emily Davis', date: '2023-10-23', status: 'Canceled', total: '$75.00' },
+  { id: 'ORD001', customer: 'John Doe', date: '2023-10-26', status: 'Shipped', total: '₹250' },
+  { id: 'ORD002', customer: 'Jane Smith', date: '2023-10-25', status: 'Processing', total: '₹150' },
+  { id: 'ORD003', customer: 'Mike Johnson', date: '2023-10-24', status: 'Delivered', total: '₹350' },
+  { id: 'ORD004', customer: 'Emily Davis', date: '2023-10-23', status: 'Canceled', total: '₹75' },
 ];
 
 const getStatusVariant = (status: string) => {
