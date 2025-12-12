@@ -68,6 +68,12 @@ const tintedGlassSubOptions = [
     { id: 'double', name: 'Double', price: 1250 },
 ];
 
+const progressiveTintedGlassSubOptions = [
+    { id: 'single', name: 'Single', price: 1650 },
+    { id: 'double', name: 'Double', price: 2050 },
+];
+
+
 export default function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.id === params.id);
   const [selectedLensId, setSelectedLensId] = useState(lensOptions[0].id);
@@ -111,8 +117,10 @@ export default function ProductPage({ params }: ProductPageProps) {
     ? bifocalSubOptions.find(b => b.id === selectedBifocalId)
     : null;
     
+  const currentTintedGlassOptions = selectedLensId === 'progressive' ? progressiveTintedGlassSubOptions : tintedGlassSubOptions;
+
   const selectedTintedGlassOption = isTintedGlassSelected
-    ? tintedGlassSubOptions.find(t => t.id === selectedTintedGlassType)
+    ? currentTintedGlassOptions.find(t => t.id === selectedTintedGlassType)
     : null;
 
   const totalPrice = product.price + (selectedLens?.price ?? 0)
@@ -268,7 +276,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Tinted Glass Type</Label>
                         <RadioGroup value={selectedTintedGlassType} onValueChange={(value: 'single' | 'double') => setSelectedTintedGlassType(value)} className="flex gap-4">
-                           {tintedGlassSubOptions.map((tint) => (
+                           {currentTintedGlassOptions.map((tint) => (
                              <div key={tint.id}>
                                 <div className={cn(
                                   'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-3 hover:bg-accent hover:text-accent-foreground',
