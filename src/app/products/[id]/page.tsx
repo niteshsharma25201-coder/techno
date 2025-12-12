@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -63,16 +63,37 @@ const bifocalSubOptions = [
     { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 130 },
 ];
 
+const tintedGlassSubOptions = [
+    { id: 'single', name: 'Single', price: 0 },
+    { id: 'double', name: 'Double', price: 20 },
+];
+
 export default function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.id === params.id);
   const [selectedLensId, setSelectedLensId] = useState(lensOptions[0].id);
   const [selectedSingleVisionId, setSelectedSingleVisionId] = useState<string | null>(null);
   const [selectedProgressiveId, setSelectedProgressiveId] = useState<string | null>(null);
   const [selectedBifocalId, setSelectedBifocalId] = useState<string | null>(null);
+  const [selectedTintedGlassType, setSelectedTintedGlassType] = useState<'single' | 'double' | null>(null);
 
   if (!product) {
     notFound();
   }
+  
+  const isTintedGlassSelected = selectedSingleVisionId?.endsWith('tinted-glass') ||
+                                selectedProgressiveId?.endsWith('tinted-glass') ||
+                                selectedBifocalId?.endsWith('tinted-glass');
+                                
+  useEffect(() => {
+    if (isTintedGlassSelected) {
+      if (!selectedTintedGlassType) {
+        setSelectedTintedGlassType('single');
+      }
+    } else {
+      setSelectedTintedGlassType(null);
+    }
+  }, [isTintedGlassSelected, selectedTintedGlassType]);
+
 
   const image = PlaceHolderImages.find((p) => p.id === product.imagePlaceholderId);
   
@@ -89,11 +110,16 @@ export default function ProductPage({ params }: ProductPageProps) {
   const selectedBifocalLens = selectedLensId === 'bifocal'
     ? bifocalSubOptions.find(b => b.id === selectedBifocalId)
     : null;
+    
+  const selectedTintedGlassOption = isTintedGlassSelected
+    ? tintedGlassSubOptions.find(t => t.id === selectedTintedGlassType)
+    : null;
 
-  const totalPrice = product.price + selectedLens.price 
+  const totalPrice = product.price + (selectedLens?.price ?? 0)
     + (selectedSingleVisionLens?.price ?? 0)
     + (selectedProgressiveLens?.price ?? 0)
-    + (selectedBifocalLens?.price ?? 0);
+    + (selectedBifocalLens?.price ?? 0)
+    + (selectedTintedGlassOption?.price ?? 0);
 
   const handleMainLensChange = (value: string) => {
     setSelectedLensId(value);
@@ -107,6 +133,16 @@ export default function ProductPage({ params }: ProductPageProps) {
         setSelectedProgressiveId(progressiveSubOptions[0].id);
     } else if (value === 'bifocal') {
         setSelectedBifocalId(bifocalSubOptions[0].id);
+    }
+  };
+  
+  const handleSubLensChange = (value: string, lensType: 'single-vision' | 'progressive' | 'bifocal') => {
+    if (lensType === 'single-vision') {
+        setSelectedSingleVisionId(value);
+    } else if (lensType === 'progressive') {
+        setSelectedProgressiveId(value);
+    } else if (lensType === 'bifocal') {
+        setSelectedBifocalId(value);
     }
   };
 
@@ -177,7 +213,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 {selectedLensId === 'single-vision' && selectedSingleVisionId && (
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Single Vision Options</Label>
-                        <Select onValueChange={setSelectedSingleVisionId} value={selectedSingleVisionId}>
+                        <Select onValueChange={(value) => handleSubLensChange(value, 'single-vision')} value={selectedSingleVisionId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a single vision lens type" />
                             </SelectTrigger>
@@ -195,7 +231,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 {selectedLensId === 'progressive' && selectedProgressiveId && (
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Progressive Options</Label>
-                        <Select onValueChange={setSelectedProgressiveId} value={selectedProgressiveId}>
+                        <Select onValueChange={(value) => handleSubLensChange(value, 'progressive')} value={selectedProgressiveId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a progressive lens type" />
                             </SelectTrigger>
@@ -213,7 +249,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 {selectedLensId === 'bifocal' && selectedBifocalId && (
                     <div className="pl-4 pr-2 space-y-2">
                         <Label>Bifocal Options</Label>
-                        <Select onValueChange={setSelectedBifocalId} value={selectedBifocalId}>
+                        <Select onValueChange={(value) => handleSubLensChange(value, 'bifocal')} value={selectedBifocalId}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a bifocal lens type" />
                             </SelectTrigger>
@@ -228,6 +264,26 @@ export default function ProductPage({ params }: ProductPageProps) {
                     </div>
                 )}
 
+                {isTintedGlassSelected && selectedTintedGlassType && (
+                    <div className="pl-4 pr-2 space-y-2">
+                        <Label>Tinted Glass Type</Label>
+                        <RadioGroup value={selectedTintedGlassType} onValueChange={(value: 'single' | 'double') => setSelectedTintedGlassType(value)} className="flex gap-4">
+                           {tintedGlassSubOptions.map((tint) => (
+                             <div key={tint.id}>
+                                <div className={cn(
+                                  'flex items-center justify-between rounded-md border-2 border-muted bg-popover p-3 hover:bg-accent hover:text-accent-foreground',
+                                   selectedTintedGlassType === tint.id && 'border-primary'
+                                )}>
+                                    <Label htmlFor={`tint-${tint.id}`} className="flex items-center gap-3 w-full cursor-pointer">
+                                        <RadioGroupItem value={tint.id} id={`tint-${tint.id}`} />
+                                        <span>{tint.name} {tint.price > 0 ? `(+ ₹${tint.price})` : ''}</span>
+                                    </Label>
+                                </div>
+                              </div>
+                          ))}
+                        </RadioGroup>
+                    </div>
+                )}
 
               </CardContent>
             </Card>
