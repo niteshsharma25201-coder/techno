@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -65,7 +66,7 @@ export default function Home() {
                     alt={image.description}
                     fill
                     className="object-cover"
-                    priority={index === 0}
+                    priority
                     data-ai-hint={image.imageHint}
                   />
                 </div>
