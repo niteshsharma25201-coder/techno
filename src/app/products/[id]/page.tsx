@@ -47,9 +47,11 @@ const singleVisionSubOptions = [
 ];
 
 const progressiveSubOptions = [
-    { id: 'prog-standard', name: 'Standard Progressive', price: 100 },
-    { id: 'prog-digital', name: 'Digital Progressive', price: 150 },
-    { id: 'prog-hd', name: 'HD Progressive', price: 200 },
+    { id: 'prog-basic', name: 'Basic', price: 120 },
+    { id: 'prog-premium', name: 'Premium', price: 160 },
+    { id: 'prog-super-premium', name: 'Super Premium', price: 200 },
+    { id: 'prog-premium-thin', name: 'Premium Thin', price: 240 },
+    { id: 'prog-tinted-glass', name: 'Tinted Glass', price: 180 },
 ];
 
 const bifocalSubOptions = [
