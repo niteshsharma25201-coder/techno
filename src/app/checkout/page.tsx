@@ -24,6 +24,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { CreditCard, Landmark, Banknote } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 const checkoutSchema = z.object({
   fullName: z.string().min(1, 'Full name is required.'),
