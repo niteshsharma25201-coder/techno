@@ -57,7 +57,7 @@ export default function CheckoutForm() {
   const { toast } = useToast();
 
   const totalPrice = searchParams.get('totalPrice') || '0';
-  const shippingFee = 50;
+  const shippingFee = 0;
   const finalAmount = parseFloat(totalPrice) + shippingFee;
 
   const form = useForm<CheckoutFormValues>({
@@ -361,4 +361,3 @@ export default function CheckoutForm() {
     </Card>
   );
 }
-

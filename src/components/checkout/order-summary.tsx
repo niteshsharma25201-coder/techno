@@ -21,7 +21,7 @@ export default function OrderSummary() {
   const framePrice = parseFloat(searchParams.get('framePrice') || '0');
   const lensPrice = parseFloat(searchParams.get('lensPrice') || '0');
   const lensSelection = searchParams.get('lensSelection');
-  const shippingFee = 50; // Standard shipping fee
+  const shippingFee = 0; // Free shipping
   const totalPayable = framePrice + lensPrice + shippingFee;
 
   const product = products.find(p => p.id === productId);
@@ -82,7 +82,7 @@ export default function OrderSummary() {
             </div>
             <div className="flex justify-between">
                 <p className="text-muted-foreground">Shipping Fee</p>
-                <p>₹{shippingFee.toFixed(2)}</p>
+                <p>Free</p>
             </div>
         </div>
 
