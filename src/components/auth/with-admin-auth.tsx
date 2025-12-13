@@ -3,6 +3,8 @@
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import { useFirestore } from '@/firebase';
 
 const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
 
@@ -14,16 +16,13 @@ const withAdminAuth = <P extends object>(WrappedComponent: React.ComponentType<P
     useEffect(() => {
       if (!isUserLoading) {
         if (!user) {
-          // If no user is logged in, redirect to login
           router.replace('/login');
         } else if (user.email !== ADMIN_EMAIL) {
-          // If user is not the admin, redirect to home
           router.replace('/');
         }
       }
     }, [user, isUserLoading, router]);
 
-    // While checking, show a loading state
     if (isUserLoading || !user || user.email !== ADMIN_EMAIL) {
       return (
         <div className="flex items-center justify-center min-h-screen">
@@ -32,7 +31,6 @@ const withAdminAuth = <P extends object>(WrappedComponent: React.ComponentType<P
       );
     }
 
-    // If user is the admin, render the component
     return <WrappedComponent {...props} />;
   };
 

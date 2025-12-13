@@ -18,7 +18,7 @@ export default function Footer() {
           {/* Column 1: Brand Info */}
           <div className="flex flex-col">
             <div className="flex items-center space-x-2 mb-4">
-              <Eye className="h-10 w-10 text-red-500" />
+              <Eye className="h-10 w-10 text-primary" />
               <span className="font-bold text-xl font-headline">Techno-i</span>
             </div>
             <h3 className="font-semibold text-lg mb-2">Clear Vision Better Vision</h3>
