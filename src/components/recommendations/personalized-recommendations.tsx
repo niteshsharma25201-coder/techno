@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getPersonalizedRecommendations } from '@/ai/flows/personalized-product-recommendations';
 import { products } from '@/lib/products';
 import ProductCard from '@/components/products/product-card';
 import {
@@ -19,32 +18,14 @@ import { Lightbulb } from 'lucide-react';
 export default function PersonalizedRecommendations() {
   const [recommendations, setRecommendations] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchRecommendations() {
-      try {
-        setLoading(true);
-        // Simulate user behavior for the AI model
-        const input = {
-          viewingHistory: '1, 5, 8', // IDs for Classic Aviators, Titanium Frames, HD Vision Lenses
-          searchBehavior: 'round sunglasses, polarized lenses',
-        };
-
-        const result = await getPersonalizedRecommendations(input);
-        const recommendedIds = result.productRecommendations.split(',').map(id => id.trim());
-        
-        const recommendedProducts = products.filter(p => recommendedIds.includes(p.id));
-        setRecommendations(recommendedProducts);
-      } catch (err) {
-        console.error('Failed to fetch recommendations:', err);
-        setError('Could not load personalized recommendations at this time.');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchRecommendations();
+    // To prevent API rate-limiting errors, we'll use a static list of featured products.
+    // In a production environment, you would implement proper caching or use a dedicated recommendations engine.
+    const featuredProductIds = ['1', '2', '3', '4'];
+    const recommendedProducts = products.filter(p => featuredProductIds.includes(p.id));
+    setRecommendations(recommendedProducts);
+    setLoading(false);
   }, []);
 
   if (loading) {
@@ -72,7 +53,7 @@ export default function PersonalizedRecommendations() {
     );
   }
 
-  if (error || recommendations.length === 0) {
+  if (recommendations.length === 0) {
     return null;
   }
 
@@ -82,7 +63,7 @@ export default function PersonalizedRecommendations() {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold font-headline">Just For You</h2>
           <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
-            AI-powered suggestions based on your interests.
+            Our top picks based on your interests.
           </p>
         </div>
         <Carousel
