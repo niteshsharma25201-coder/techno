@@ -115,7 +115,7 @@ export default function PrescriptionModal({
               {isProgressiveOrBifocal && (
                 <>
                     <div className="space-y-2">
-                        <Label htmlFor="right-eye-nv">Right Eye (ADD)</Label>
+                        <Label htmlFor="right-eye-nv">Right Eye</Label>
                         <Input
                         id="right-eye-nv"
                         placeholder="e.g., +1.25"
@@ -124,7 +124,7 @@ export default function PrescriptionModal({
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="left-eye-nv">Left Eye (ADD)</Label>
+                        <Label htmlFor="left-eye-nv">Left Eye</Label>
                         <Input
                         id="left-eye-nv"
                         placeholder="e.g., +1.50"
