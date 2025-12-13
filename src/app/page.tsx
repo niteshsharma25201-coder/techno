@@ -57,6 +57,20 @@ export default function Home() {
       buttonLink: '/products?category=Eyewear',
     },
     {
+      id: 'hero-2',
+      title: 'Expertly Crafted',
+      subtitle: 'For the modern professional.',
+      buttonText: 'See Menswear',
+      buttonLink: '/products?q=man',
+    },
+    {
+        id: 'hero-4',
+        title: 'Personalized Service',
+        subtitle: 'Let us help you find the perfect fit.',
+        buttonText: 'Visit Us',
+        buttonLink: '/contact',
+    },
+    {
       id: 'hero-5',
       title: 'Summer Shades',
       subtitle: 'Protect your eyes in style.',
