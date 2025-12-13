@@ -18,7 +18,7 @@
  * - Admin by Existence: Administrator status is determined by the existence of a
  *   document in `/roles_admin/{auth.uid}`. This is a highly performant and secure
  *   pattern that avoids embedding roles in user documents or other collections.
- * - User Data Privacy: The `/users` collection cannot be listed by any client,
+ * - User Data Privacy: The `/users` collection cannot be listed by non-admins,
  *   preventing enumeration of all users in the application.
  * - Admin Privileges: Admins have read-only access to all user data but cannot
  *   modify or delete it. Management of the admin role collection itself is restricted
@@ -118,7 +118,7 @@ service cloud.firestore {
      */
     match /users/{userId} {
       allow get: if isOwner(userId) || isAdmin();
-      allow list: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
       allow create: if isOwner(userId) && hasCorrectUserIdOnCreate(userId);
       allow update: if isOwner(userId) && resource != null && isUserIdImmutable();
       allow delete: if isOwner(userId) && resource != null;
