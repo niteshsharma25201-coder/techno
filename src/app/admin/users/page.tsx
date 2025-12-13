@@ -33,6 +33,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 
+const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
+
 export default function AdminUsersPage() {
   const firestore = useFirestore();
 
@@ -43,15 +45,12 @@ export default function AdminUsersPage() {
   
   const { data: users, isLoading: isLoadingUsers } = useCollection(usersQuery);
 
-  const rolesAdminQuery = useMemoFirebase(() => collection(firestore, 'roles_admin'), [firestore]);
-  const { data: adminRoles, isLoading: isLoadingAdmins } = useCollection(rolesAdminQuery);
-
-  const getUserRole = (userId: string) => {
-    return adminRoles?.some(admin => admin.id === userId) ? 'Admin' : 'Customer';
+  const getUserRole = (userEmail: string) => {
+    return userEmail === ADMIN_EMAIL ? 'Admin' : 'Customer';
   }
 
   const renderContent = () => {
-    if (isLoadingUsers || isLoadingAdmins) {
+    if (isLoadingUsers) {
       return (
         <div className="space-y-2">
           {[...Array(5)].map((_, i) => (
@@ -82,8 +81,8 @@ export default function AdminUsersPage() {
               <TableCell className="font-medium">{user.firstName} {user.lastName}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                <Badge variant={getUserRole(user.id) === 'Admin' ? 'default' : 'secondary'}>
-                  {getUserRole(user.id)}
+                <Badge variant={getUserRole(user.email) === 'Admin' ? 'default' : 'secondary'}>
+                  {getUserRole(user.email)}
                 </Badge>
               </TableCell>
               <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
