@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import withAdminAuth from '@/components/auth/with-admin-auth';
 
 const adminNavItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -28,7 +29,7 @@ const adminNavItems = [
   { href: '/admin/orders', label: 'Orders', icon: ClipboardList },
 ];
 
-export default function AdminLayout({
+function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -80,3 +81,5 @@ export default function AdminLayout({
     </SidebarProvider>
   );
 }
+
+export default withAdminAuth(AdminLayout);
