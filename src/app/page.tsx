@@ -9,10 +9,19 @@ import { products } from '@/lib/products';
 import ProductCard from '@/components/products/product-card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { ShieldCheck, Truck, Gem, Gift } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
-  const bannerImage = PlaceHolderImages.find(p => p.id === 'hero-banner-1');
+  const bannerImages = PlaceHolderImages.filter(p => p.id.startsWith('hero-'));
 
   const features = [
     {
@@ -32,32 +41,82 @@ export default function Home() {
     },
   ];
 
+  const heroSlides = [
+    {
+      id: 'hero-banner-1',
+      title: 'Free Eye Testing',
+      subtitle: 'Frames ke sath lens free',
+      buttonText: 'Shop Now',
+      buttonLink: '/products',
+    },
+    {
+      id: 'hero-1',
+      title: 'Style & Vision',
+      subtitle: 'Discover your perfect pair.',
+      buttonText: 'Explore Collection',
+      buttonLink: '/products?category=Eyewear',
+    },
+    {
+      id: 'hero-5',
+      title: 'Summer Shades',
+      subtitle: 'Protect your eyes in style.',
+      buttonText: 'View Sunglasses',
+      buttonLink: '/products?category=Sunglasses',
+    },
+  ];
+
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative w-full h-[60vh] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/50 z-10" />
-        {bannerImage && (
-          <Image
-            src={bannerImage.imageUrl}
-            alt={bannerImage.description}
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint={bannerImage.imageHint}
-          />
-        )}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-4">
-          <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-shadow-lg">
-            Free Eye Testing
-          </h1>
-          <p className="mt-4 max-w-2xl text-2xl md:text-3xl font-semibold text-white/90 text-shadow">
-            Frames ke sath lens free
-          </p>
-          <Button asChild size="lg" className="mt-8 shadow-lg">
-            <Link href="/products">Shop Now</Link>
-          </Button>
-        </div>
+       <section className="relative w-full h-[60vh] text-white overflow-hidden">
+         <Carousel
+          className="w-full h-full"
+          plugins={[
+            Autoplay({
+              delay: 5000,
+            }),
+          ]}
+          opts={{
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {heroSlides.map((slide) => {
+              const bannerImage = PlaceHolderImages.find(p => p.id === slide.id);
+              return (
+                <CarouselItem key={slide.id}>
+                    <div className="relative w-full h-[60vh]">
+                        <div className="absolute inset-0 bg-black/50 z-10" />
+                        {bannerImage && (
+                        <Image
+                            src={bannerImage.imageUrl}
+                            alt={bannerImage.description}
+                            fill
+                            className="object-cover"
+                            priority
+                            data-ai-hint={bannerImage.imageHint}
+                        />
+                        )}
+                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-4">
+                            <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-shadow-lg">
+                                {slide.title}
+                            </h1>
+                            <p className="mt-4 max-w-2xl text-2xl md:text-3xl font-semibold text-white/90 text-shadow">
+                                {slide.subtitle}
+                            </p>
+                            <Button asChild size="lg" className="mt-8 shadow-lg">
+                                <Link href={slide.buttonLink}>{slide.buttonText}</Link>
+                            </Button>
+                        </div>
+                    </div>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-30 hidden md:flex" />
+          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-30 hidden md:flex" />
+        </Carousel>
       </section>
 
       {/* Personalized Recommendations Section */}
