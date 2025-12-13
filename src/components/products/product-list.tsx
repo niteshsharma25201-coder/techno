@@ -45,6 +45,7 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
         const values = Array.isArray(value) ? value : [value];
         products = products.filter(p => {
             const productValue = p[key as keyof Product];
+            // Ensure productValue is a string and is included in the filter values array
             return typeof productValue === 'string' && values.includes(productValue);
         });
       }
@@ -78,4 +79,5 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
     </div>
   );
 }
+
 
