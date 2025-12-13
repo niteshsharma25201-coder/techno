@@ -4,7 +4,7 @@ import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-const ADMIN_EMAIL = 'nitteshsharma25201@gmail.com';
+const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
 
 const withAdminAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const WithAdminAuthComponent = (props: P) => {
