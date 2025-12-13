@@ -78,3 +78,4 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
     </div>
   );
 }
+
