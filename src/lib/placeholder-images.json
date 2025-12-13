@@ -2,38 +2,38 @@
   "placeholderImages": [
     {
       "id": "hero-1",
-      "description": "Stylish woman wearing sunglasses in a cityscape",
-      "imageUrl": "https://images.unsplash.com/photo-1577803645773-f1245c48325a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdW5nbGFzc2VzJTIwbW9kZWx8ZW58MHx8fHwxNzY1NTU1MjA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "sunglasses model"
+      "description": "A stylish woman wearing modern eyeglasses and looking at the camera.",
+      "imageUrl": "https://images.unsplash.com/photo-1574688264537-e548d73a4133?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "woman eyeglasses"
     },
     {
       "id": "hero-2",
-      "description": "Close-up of a person wearing modern, clear-lens eyewear",
-      "imageUrl": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbnwwfHx8fDE3NjU1NTUyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "eyewear model"
+      "description": "A man with a beard wearing round prescription glasses.",
+      "imageUrl": "https://images.unsplash.com/photo-1614251991243-e76a44546414?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "man eyeglasses"
     },
     {
       "id": "hero-3",
-      "description": "Man wearing stylish sunglasses outdoors",
-      "imageUrl": "https://images.unsplash.com/photo-1517702814239-e587214a381f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzdW5nbGFzc2VzJTIwbWFufGVufDB8fHx8MTc2NTU1NTYxNHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "man sunglasses"
-    },
-    {
-      "id": "hero-4",
-      "description": "A collection of different styles of eyewear on a clean background",
-      "imageUrl": "https://images.unsplash.com/photo-1627192239691-2f7d549a9307?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxleWV3ZWFyJTIwY29sbGVjdGlvbnxlbnwwfHx8fDE3NjU1NTU2OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A close-up of a variety of colorful eyeglasses frames.",
+      "imageUrl": "https://images.unsplash.com/photo-1542541332-b13c66a4f228?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "eyewear collection"
     },
     {
+      "id": "hero-4",
+      "description": "An optician helping a customer choose a pair of glasses in a store.",
+      "imageUrl": "https://images.unsplash.com/photo-1588099684159-83a88b59d287?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "optical store"
+    },
+    {
       "id": "hero-5",
-      "description": "Woman with sunglasses in a convertible car",
-      "imageUrl": "https://images.unsplash.com/photo-1521142203908-c8d03b0f9e7b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A fashionable woman trying on a pair of oversized sunglasses.",
+      "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "woman sunglasses"
     },
     {
       "id": "hero-6",
-      "description": "A man wearing glasses looks at the camera.",
-      "imageUrl": "https://images.unsplash.com/photo-1610873167013-2dd675d30ef4?q=80&w=1987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A young man smiling while wearing clear-framed glasses.",
+      "imageUrl": "https://images.unsplash.com/photo-1629822421735-35c32b535b80?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "man glasses"
     },
     {
@@ -99,7 +99,7 @@
     {
       "id": "product-7",
       "description": "Daily disposable contact lenses pack",
-      "imageUrl": "https://images.unsplash.com/photo-1578903279423-9fe363f1f7b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwbGVuc2VzfGVufDB8fHx8MTc2NTQ3NDgxNXww&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1578903279423-9fe363f1f7b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwbGVuc2VzfGVufDB8fHx8MTc2NTQ3NDgxNXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "contact lenses"
     },
     {

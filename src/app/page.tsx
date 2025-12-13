@@ -66,7 +66,7 @@ export default function Home() {
                     alt={image.description}
                     fill
                     className="object-cover"
-                    priority
+                    priority={index === 0}
                     data-ai-hint={image.imageHint}
                   />
                 </div>
