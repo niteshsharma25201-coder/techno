@@ -14,6 +14,7 @@ type ProductFiltersProps = {
   materials: string[];
   lensTypes: string[];
   searchParams?: {
+    q?: string;
     category?: string;
     brand?: string | string[];
     style?: string | string[];
@@ -71,7 +72,7 @@ export default function ProductFilters({
                 checked={selectedValues.includes(item)}
                 onCheckedChange={(checked) => handleFilterChange(filterId, item, !!checked)}
             />
-            <Label htmlFor={`${filterId}-${item}`} className="font-normal">
+            <Label htmlFor={`${filterId}-${item}`} className="font-normal cursor-pointer">
                 {item}
             </Label>
             </div>
