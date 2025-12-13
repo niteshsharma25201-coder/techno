@@ -1,3 +1,4 @@
+
 /**
  * Core Philosophy:
  * This ruleset implements a hybrid security model that combines strict user-ownership
@@ -147,7 +148,7 @@ service cloud.firestore {
      *   /roles_admin/{userId}
      */
     match /roles_admin/{userId} {
-      allow get: if isAdmin();
+      allow get: if isOwner(userId) || isAdmin();
       allow list: if isAdmin();
       allow create: if isAdmin();
       allow update: if isAdmin() && resource != null;
