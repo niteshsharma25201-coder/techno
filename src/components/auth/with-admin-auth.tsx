@@ -1,37 +1,30 @@
 'use client';
 
-import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { doc } from 'firebase/firestore';
+
+const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
 
 const withAdminAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const WithAdminAuthComponent = (props: P) => {
     const { user, isUserLoading } = useUser();
-    const firestore = useFirestore();
     const router = useRouter();
 
-    const adminRoleRef = useMemoFirebase(
-      () => (user ? doc(firestore, 'roles_admin', user.uid) : null),
-      [user, firestore]
-    );
-
-    const { data: adminRole, isLoading: isAdminRoleLoading } = useDoc(adminRoleRef);
-
     useEffect(() => {
-      if (!isUserLoading && !isAdminRoleLoading) {
+      if (!isUserLoading) {
         if (!user) {
           // If no user is logged in, redirect to login
           router.replace('/login');
-        } else if (!adminRole) {
-          // If user is not an admin, redirect to home
+        } else if (user.email !== ADMIN_EMAIL) {
+          // If user is not the admin, redirect to home
           router.replace('/');
         }
       }
-    }, [user, isUserLoading, adminRole, isAdminRoleLoading, router]);
+    }, [user, isUserLoading, router]);
 
     // While checking, show a loading state
-    if (isUserLoading || isAdminRoleLoading || !user || !adminRole) {
+    if (isUserLoading || !user || user.email !== ADMIN_EMAIL) {
       return (
         <div className="flex items-center justify-center min-h-screen">
           <p>Loading...</p>
