@@ -8,7 +8,7 @@ import PersonalizedRecommendations from '@/components/recommendations/personaliz
 import { products } from '@/lib/products';
 import ProductCard from '@/components/products/product-card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ShieldCheck, Truck, Gem, Gift } from 'lucide-react';
+import { ShieldCheck, Truck, Gem, Gift, Eye, Sun, Target, Contact } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -79,6 +79,37 @@ export default function Home() {
     },
   ];
 
+  const categories = [
+    {
+      title: 'Eyewear',
+      description: 'Find your perfect frame.',
+      href: '/products?category=Eyewear',
+      icon: Eye,
+      imageId: 'hero-2',
+    },
+    {
+      title: 'Sunglasses',
+      description: 'Style and protection.',
+      href: '/products?category=Sunglasses',
+      icon: Sun,
+      imageId: 'hero-banner-1',
+    },
+    {
+      title: 'Lenses',
+      description: 'Clarity and comfort.',
+      href: '/products?category=Lenses',
+      icon: Target,
+      imageId: 'product-8',
+    },
+    {
+      title: 'Contact Lenses',
+      description: 'Effortless vision.',
+      href: '/products?category=Contact+Lenses',
+      icon: Contact,
+      imageId: 'product-7',
+    }
+  ];
+
 
   return (
     <div className="flex flex-col">
@@ -131,6 +162,51 @@ export default function Home() {
           <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-30 hidden md:flex" />
           <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-30 hidden md:flex" />
         </Carousel>
+      </section>
+
+      {/* Categories Section */}
+      <section className="w-full py-16 lg:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold font-headline">Shop by Category</h2>
+            <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
+              Browse our curated selection of eyewear, sunglasses, and lenses.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {categories.map((category) => {
+              const categoryImage = PlaceHolderImages.find(p => p.id === category.imageId);
+              return (
+                <Link key={category.title} href={category.href} className="group">
+                  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <CardContent className="p-0">
+                      <div className="relative aspect-square w-full">
+                        {categoryImage ? (
+                          <Image
+                            src={categoryImage.imageUrl}
+                            alt={category.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-ai-hint={categoryImage.imageHint}
+                          />
+                        ) : (
+                          <div className="bg-muted flex items-center justify-center h-full">
+                             <category.icon className="w-12 h-12 text-muted-foreground" />
+                          </div>
+                        )}
+                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      </div>
+                      <div className="absolute bottom-0 p-4">
+                          <h3 className="text-2xl font-bold text-white">{category.title}</h3>
+                          <p className="text-white/80">{category.description}</p>
+                        </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       {/* Personalized Recommendations Section */}
