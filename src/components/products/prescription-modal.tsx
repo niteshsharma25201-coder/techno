@@ -95,7 +95,7 @@ export default function PrescriptionModal({
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="right-eye">Right Eye (DV-OD)</Label>
+                <Label htmlFor="right-eye">Right Eye (OD)</Label>
                 <Input
                   id="right-eye"
                   placeholder="e.g., -1.75"
@@ -104,7 +104,7 @@ export default function PrescriptionModal({
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="left-eye">Left Eye (DV-OS)</Label>
+                <Label htmlFor="left-eye">Left Eye (OS)</Label>
                 <Input
                   id="left-eye"
                   placeholder="e.g., -2.00"
