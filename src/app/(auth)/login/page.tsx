@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth, useUser } from '@/firebase';
-import { initiateEmailSignIn } from '@/firebase/non-blocking-login';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useEffect } from 'react';
 
 const loginSchema = z.object({
@@ -41,13 +41,29 @@ export default function LoginPage() {
     }
   }, [user, isUserLoading, router]);
 
-  const onSubmit = (data: LoginFormValues) => {
-    initiateEmailSignIn(auth, data.email, data.password);
-    toast({
-      title: 'Check your email',
-      description: 'A sign-in link has been sent to your email address.',
-    });
-    // The useUser hook will detect the auth state change and handle the redirect
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        toast({
+            title: 'Logged In',
+            description: 'You have been successfully logged in.',
+        });
+      // The useUser hook will detect the auth state change and the useEffect above will redirect.
+    } catch(error: any) {
+        let title = 'Login Failed';
+        let description = 'An unexpected error occurred. Please try again.';
+
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+            title = 'Invalid Credentials';
+            description = 'The email or password you entered is incorrect.';
+        }
+        
+        toast({
+            variant: 'destructive',
+            title: title,
+            description: description,
+        });
+    }
   };
   
   if (isUserLoading || user) {

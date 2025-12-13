@@ -1,5 +1,19 @@
+'use client';
+
+import {
+  useFirestore,
+  useCollection,
+  useMemoFirebase,
+} from '@/firebase';
+import { collection, query, orderBy } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -10,16 +24,91 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { MoreHorizontal } from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
-const mockUsers = [
-  { id: '1', name: 'John Doe', email: 'john.d@example.com', role: 'Customer', status: 'Active' },
-  { id: '2', name: 'Jane Smith', email: 'jane.s@example.com', role: 'Customer', status: 'Active' },
-  { id: '3', name: 'Admin User', email: 'admin@technoii.com', role: 'Admin', status: 'Active' },
-  { id: '4', name: 'Mike Johnson', email: 'mike.j@example.com', role: 'Customer', status: 'Suspended' },
-];
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function AdminUsersPage() {
+  const firestore = useFirestore();
+
+  const usersQuery = useMemoFirebase(
+    () => query(collection(firestore, 'users'), orderBy('createdAt', 'desc')),
+    [firestore]
+  );
+  
+  const { data: users, isLoading: isLoadingUsers } = useCollection(usersQuery);
+
+  const rolesAdminQuery = useMemoFirebase(() => collection(firestore, 'roles_admin'), [firestore]);
+  const { data: adminRoles, isLoading: isLoadingAdmins } = useCollection(rolesAdminQuery);
+
+  const getUserRole = (userId: string) => {
+    return adminRoles?.some(admin => admin.id === userId) ? 'Admin' : 'Customer';
+  }
+
+  const renderContent = () => {
+    if (isLoadingUsers || isLoadingAdmins) {
+      return (
+        <div className="space-y-2">
+          {[...Array(5)].map((_, i) => (
+            <Skeleton key={i} className="h-12 w-full" />
+          ))}
+        </div>
+      );
+    }
+    
+    if (!users || users.length === 0) {
+        return <p>No users found.</p>;
+    }
+
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Joined On</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell className="font-medium">{user.firstName} {user.lastName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <Badge variant={getUserRole(user.id) === 'Admin' ? 'default' : 'secondary'}>
+                  {getUserRole(user.id)}
+                </Badge>
+              </TableCell>
+              <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+              <TableCell className="text-right">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                      <span className="sr-only">Open menu</span>
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuItem>Edit Role</DropdownMenuItem>
+                    <DropdownMenuItem>View Details</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    );
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -27,52 +116,7 @@ export default function AdminUsersPage() {
         <CardDescription>Manage all user accounts.</CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {mockUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <Badge variant={user.role === 'Admin' ? 'default' : 'secondary'}>
-                    {user.role}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge variant={user.status === 'Active' ? 'outline' : 'destructive'}>
-                    {user.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit Role</DropdownMenuItem>
-                      <DropdownMenuItem>
-                        {user.status === 'Active' ? 'Suspend' : 'Activate'}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        {renderContent()}
       </CardContent>
     </Card>
   );

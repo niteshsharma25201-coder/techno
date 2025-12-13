@@ -11,10 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth, useFirestore, useUser } from '@/firebase';
-import { initiateEmailSignUp } from '@/firebase/non-blocking-login';
-import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { doc } from 'firebase/firestore';
-import { useEffect } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required.' }),
@@ -41,38 +39,55 @@ export default function SignupPage() {
       password: '',
     },
   });
-
+  
   useEffect(() => {
     if (!isUserLoading && user) {
-      const { uid } = user;
-      const { firstName, lastName, email } = form.getValues();
+        router.replace('/');
+    }
+  }, [user, isUserLoading, router]);
 
+  const onSubmit = async (data: SignupFormValues) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const { uid } = userCredential.user;
+      
       const userDocRef = doc(firestore, 'users', uid);
       const userData = {
         id: uid,
-        firstName,
-        lastName,
-        email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
       
-      setDocumentNonBlocking(userDocRef, userData, { merge: true });
+      await setDoc(userDocRef, userData);
       
-      router.replace('/');
+      toast({
+        title: 'Account Created!',
+        description: 'You have been successfully signed up.',
+      });
+
+      // The useUser hook will detect the auth state change and the useEffect above will redirect.
+
+    } catch (error: any) {
+        let title = 'Sign Up Failed';
+        let description = 'An unexpected error occurred. Please try again.';
+
+        if (error.code === 'auth/email-already-in-use') {
+            title = 'Email Already in Use';
+            description = 'This email address is already associated with an account. Please log in instead.';
+        }
+
+        toast({
+            variant: 'destructive',
+            title: title,
+            description: description,
+        });
     }
-  }, [user, isUserLoading, router, firestore, form]);
-
-
-  const onSubmit = async (data: SignupFormValues) => {
-    initiateEmailSignUp(auth, data.email, data.password);
-    toast({
-      title: 'Account creation initiated',
-      description: "You'll be redirected shortly.",
-    });
   };
 
-  if (isUserLoading) {
+  if (isUserLoading || user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p>Loading...</p>
