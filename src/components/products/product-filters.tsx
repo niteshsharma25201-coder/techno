@@ -37,18 +37,16 @@ export default function ProductFilters({
   const handleFilterChange = useCallback(
     (filterName: string, value: string, checked: boolean) => {
       const newParams = new URLSearchParams(currentSearchParams.toString());
-      const allValues = newParams.getAll(filterName);
-
+      
       if (checked) {
-        if (!allValues.includes(value)) {
-          newParams.append(filterName, value);
-        }
+        newParams.append(filterName, value);
       } else {
+        const allValues = newParams.getAll(filterName);
         newParams.delete(filterName);
         allValues.filter((v) => v !== value).forEach(v => newParams.append(filterName, v));
       }
       
-      router.push(`${pathname}?${newParams.toString()}`);
+      router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
     },
     [currentSearchParams, pathname, router]
   );
