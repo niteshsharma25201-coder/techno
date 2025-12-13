@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -32,26 +33,11 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useAuth, useUser } from '@/firebase';
-import { useState } from 'react';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  {
-    label: 'Shop',
-    subLinks: [
-      { href: '/products?category=Sunglasses', label: 'Sunglasses' },
-      { href: '/products?category=Eyewear', label: 'Eyewear' },
-      { href: '/products?category=Lenses', label: 'Lenses' },
-      { href: '/products?category=Contact+Lenses', label: 'Contact Lenses' },
-    ],
-  },
-  { href: '/admin', label: 'Admin Panel' },
-];
+import SearchBar from './search-bar';
 
 const shopSubLinks = [
     { href: '/products?category=Sunglasses', label: 'Sunglasses' },
@@ -63,18 +49,8 @@ const shopSubLinks = [
 export default function Header() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
-  const router = useRouter();
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
-      // Optionally close mobile search sheet if open
-    }
-  };
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -290,18 +266,6 @@ export default function Header() {
       </>
     );
   };
-
-  const SearchBar = () => (
-    <form onSubmit={handleSearchSubmit} className="w-full relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-      <Input
-        placeholder="Search products..."
-        className="pl-9 w-full bg-card"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-    </form>
-  );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
