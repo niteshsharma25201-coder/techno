@@ -232,7 +232,7 @@ export default function Home() {
       <section className="w-full py-16 lg:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose Technoii Optics?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose Technoii?</h2>
             <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
               We are committed to providing the best products and services to our customers.
             </p>
