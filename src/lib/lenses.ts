@@ -11,6 +11,7 @@ export const singleVisionSubOptions = [
       { id: 'sv-premium', name: 'Premium', price: 650 },
       { id: 'sv-super-premium', name: 'Super Premium', price: 1050 },
       { id: 'sv-premium-thin', name: 'Premium Thin', price: 2250 },
+      { id: 'sv-photocromatic', name: 'Photochromatic', price: 2500 },
       { id: 'sv-tinted-glass', name: 'Tinted Glass', price: 0 },
   ];
   
@@ -19,6 +20,7 @@ export const progressiveSubOptions = [
       { id: 'prog-premium', name: 'Premium', price: 1700 },
       { id: 'prog-super-premium', name: 'Super Premium', price: 2450 },
       { id: 'prog-premium-thin', name: 'Premium Thin', price: 4500 },
+      { id: 'prog-photocromatic', name: 'Photochromatic', price: 5000 },
       { id: 'prog-tinted-glass', name: 'Tinted Glass', price: 0 },
   ];
   
@@ -27,6 +29,7 @@ export const bifocalSubOptions = [
       { id: 'bifocal-premium', name: 'Premium', price: 650 },
       { id: 'bifocal-super-premium', name: 'Super Premium', price: 1050 },
       { id: 'bifocal-premium-thin', name: 'Premium Thin', price: 2250 },
+      { id: 'bifocal-photocromatic', name: 'Photochromatic', price: 2500 },
       { id: 'bifocal-tinted-glass', name: 'Tinted Glass', price: 0 },
   ];
   
