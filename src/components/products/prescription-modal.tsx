@@ -33,6 +33,7 @@ export default function PrescriptionModal({
   const [leftEye, setLeftEye] = useState('');
   const [rightEyeNV, setRightEyeNV] = useState('');
   const [leftEyeNV, setLeftEyeNV] = useState('');
+  const [additional, setAdditional] = useState('');
   const [prescriptionFile, setPrescriptionFile] = useState<File | null>(null);
 
   const isProgressiveOrBifocal = lensType.toLowerCase().includes('progressive') || lensType.toLowerCase().includes('bifocal');
@@ -48,6 +49,7 @@ export default function PrescriptionModal({
     if (isProgressiveOrBifocal) {
         prescriptionData.rightEyeNV = rightEyeNV;
         prescriptionData.leftEyeNV = leftEyeNV;
+        prescriptionData.additional = additional;
     }
 
     console.log({
@@ -131,6 +133,15 @@ export default function PrescriptionModal({
                         value={leftEyeNV}
                         onChange={(e) => setLeftEyeNV(e.target.value)}
                         />
+                    </div>
+                    <div className="space-y-2 col-span-2">
+                      <Label htmlFor="additional">Additional</Label>
+                      <Input
+                        id="additional"
+                        placeholder="Enter additional info"
+                        value={additional}
+                        onChange={(e) => setAdditional(e.target.value)}
+                      />
                     </div>
                 </>
               )}
