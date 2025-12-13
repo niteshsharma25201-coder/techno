@@ -8,22 +8,11 @@ import PersonalizedRecommendations from '@/components/recommendations/personaliz
 import { products } from '@/lib/products';
 import ProductCard from '@/components/products/product-card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
 import { ShieldCheck, Truck, Gem } from 'lucide-react';
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
-  const heroImages = PlaceHolderImages.filter(p => p.id.startsWith('hero-'));
-
-  const plugin = useRef(
-    Autoplay({ delay: 4000, stopOnInteraction: true })
-  );
+  const bannerImage = PlaceHolderImages.find(p => p.id === 'hero-banner-1');
 
   const features = [
     {
@@ -46,40 +35,24 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
-        <Carousel
-          plugins={[plugin.current]}
-          className="w-full h-full"
-          onMouseEnter={plugin.current.stop}
-          onMouseLeave={plugin.current.reset}
-          opts={{
-            loop: true,
-          }}
-        >
-          <CarouselContent>
-            {heroImages.map((image, index) => (
-              <CarouselItem key={image.id}>
-                <div className="relative h-[70vh] w-full">
-                  <Image
-                    src={image.imageUrl}
-                    alt={image.description}
-                    fill
-                    className="object-cover"
-                    priority={index === 0}
-                    data-ai-hint={image.imageHint}
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+      <section className="relative w-full h-[60vh] text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/50 z-10" />
+        {bannerImage && (
+          <Image
+            src={bannerImage.imageUrl}
+            alt={bannerImage.description}
+            fill
+            className="object-cover"
+            priority
+            data-ai-hint={bannerImage.imageHint}
+          />
+        )}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-shadow-lg">
-            See the World Differently
+            Free Eye Testing
           </h1>
-          <p className="mt-4 max-w-2xl text-lg md:text-xl text-white/90 text-shadow">
-            Discover our exclusive collection of premium eyewear, crafted with precision and style.
+          <p className="mt-4 max-w-2xl text-2xl md:text-3xl font-semibold text-white/90 text-shadow">
+            Frames ke sath lens free
           </p>
           <Button asChild size="lg" className="mt-8 shadow-lg">
             <Link href="/products">Shop Now</Link>
@@ -135,3 +108,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
