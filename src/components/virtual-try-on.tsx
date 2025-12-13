@@ -24,45 +24,45 @@ export default function VirtualTryOn() {
   const { toast } = useToast();
 
   useEffect(() => {
-    const getCameraPermission = async () => {
-      if (isOpen) {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-          streamRef.current = stream;
-          setHasCameraPermission(true);
-
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        } catch (error) {
-          console.error('Error accessing camera:', error);
-          setHasCameraPermission(false);
-          toast({
-            variant: 'destructive',
-            title: 'Camera Access Denied',
-            description: 'Please enable camera permissions in your browser settings to use this feature.',
-          });
+    const enableCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        streamRef.current = stream;
+        setHasCameraPermission(true);
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
         }
-      } else {
-        // Cleanup when dialog is closed
-        if (streamRef.current) {
-          streamRef.current.getTracks().forEach(track => track.stop());
-          streamRef.current = null;
-        }
-        if(videoRef.current) {
-            videoRef.current.srcObject = null;
-        }
-        setHasCameraPermission(null);
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        setHasCameraPermission(false);
+        toast({
+          variant: 'destructive',
+          title: 'Camera Access Denied',
+          description: 'Please enable camera permissions in your browser settings to use this feature.',
+        });
       }
     };
 
-    getCameraPermission();
-
-    return () => {
-      // Cleanup on component unmount
+    const disableCamera = () => {
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
       }
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+      setHasCameraPermission(null);
+    };
+
+    if (isOpen) {
+      setHasCameraPermission(null); // Reset on open
+      enableCamera();
+    } else {
+      disableCamera();
+    }
+
+    return () => {
+      disableCamera(); // Cleanup on component unmount
     };
   }, [isOpen, toast]);
 
