@@ -175,9 +175,9 @@ export default function Home() {
               const categoryImage = PlaceHolderImages.find(p => p.id === category.imageId);
               return (
                 <Link key={category.title} href={category.href} className="group">
-                  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <CardContent className="p-0">
-                      <div className="relative aspect-square w-full">
+                  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card">
+                    <CardContent className="p-6 flex flex-col items-center justify-center text-center">
+                      <div className="relative h-32 w-32 rounded-full overflow-hidden mb-4 border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-300">
                         {categoryImage ? (
                           <Image
                             src={categoryImage.imageUrl}
@@ -191,12 +191,9 @@ export default function Home() {
                              <category.icon className="w-12 h-12 text-muted-foreground" />
                           </div>
                         )}
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       </div>
-                      <div className="absolute bottom-0 p-4">
-                          <h3 className="text-2xl font-bold text-white">{category.title}</h3>
-                          <p className="text-white/80">{category.description}</p>
-                        </div>
+                      <h3 className="text-xl font-bold">{category.title}</h3>
+                      <p className="text-sm text-muted-foreground">{category.description}</p>
                     </CardContent>
                   </Card>
                 </Link>
