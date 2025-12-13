@@ -8,7 +8,7 @@ import PersonalizedRecommendations from '@/components/recommendations/personaliz
 import { products } from '@/lib/products';
 import ProductCard from '@/components/products/product-card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ShieldCheck, Truck, Gem } from 'lucide-react';
+import { ShieldCheck, Truck, Gem, Gift } from 'lucide-react';
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
@@ -105,8 +105,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* BOGO Banner Section */}
+      <section className="w-full py-16 lg:py-20 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <Gift className="h-16 w-16 mx-auto mb-4" />
+          <h2 className="text-3xl md:text-4xl font-bold font-headline">Buy One, Get One Free</h2>
+          <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl">
+            Purchase any frame with lenses and receive another frame of your choice absolutely free!
+          </p>
+          <Button asChild size="lg" variant="secondary" className="mt-8 shadow-lg">
+            <Link href="/products">Explore Frames</Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
-
-    
