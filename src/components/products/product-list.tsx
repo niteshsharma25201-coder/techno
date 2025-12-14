@@ -41,14 +41,17 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
     }
     
     const filterByParam = (key: 'brand' | 'style' | 'material' | 'lensType' | 'gender') => {
-      const value = searchParams?.[key];
-      if (value && value.length > 0) {
-        const filterValues = Array.isArray(value) ? value : [value];
+        const urlValue = searchParams?.[key];
+        if (!urlValue || (Array.isArray(urlValue) && urlValue.length === 0)) {
+            return;
+        }
+
+        const filterValues = Array.isArray(urlValue) ? urlValue : [urlValue];
+        
         products = products.filter(p => {
-            const productValue = p[key as keyof Product];
+            const productValue = p[key];
             return typeof productValue === 'string' && filterValues.includes(productValue);
         });
-      }
     };
 
     filterByParam('brand');
