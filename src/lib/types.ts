@@ -9,6 +9,7 @@ export type Product = {
   style: string;
   material: string;
   lensType: string;
+  gender: 'Men' | 'Women' | 'Kids' | 'Unisex';
 };
 
 export type Review = {

@@ -5,6 +5,7 @@ export const brands = ['Ray-Ban', 'Technoii', 'Titan', 'Fastrack', 'Laureldale E
 export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular', 'Sport'];
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
 export const lensTypes = ['Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
+export const genders = ['Men', 'Women', 'Kids', 'Unisex'];
 
 export const products: Product[] = [
   {
@@ -18,6 +19,7 @@ export const products: Product[] = [
     style: 'Aviator',
     material: 'Metal',
     lensType: 'Non-Polarized',
+    gender: 'Unisex',
   },
   {
     id: '2',
@@ -30,6 +32,7 @@ export const products: Product[] = [
     style: 'Wayfarer',
     material: 'Acetate',
     lensType: 'Polarized',
+    gender: 'Men',
   },
   {
     id: '3',
@@ -42,6 +45,7 @@ export const products: Product[] = [
     style: 'Cat Eye',
     material: 'Acetate',
     lensType: 'Non-Polarized',
+    gender: 'Women',
   },
   {
     id: '4',
@@ -54,6 +58,7 @@ export const products: Product[] = [
     style: 'Round',
     material: 'Metal',
     lensType: 'Non-Polarized',
+    gender: 'Unisex',
   },
   {
     id: '5',
@@ -66,6 +71,7 @@ export const products: Product[] = [
     style: 'Rectangular',
     material: 'Titanium',
     lensType: 'Blue Light',
+    gender: 'Men',
   },
   {
     id: '6',
@@ -78,6 +84,7 @@ export const products: Product[] = [
     style: 'Sport',
     material: 'Plastic',
     lensType: 'Mirrored',
+    gender: 'Unisex',
   },
   {
     id: '7',
@@ -90,6 +97,7 @@ export const products: Product[] = [
     style: 'N/A',
     material: 'N/A',
     lensType: 'N/A',
+    gender: 'Unisex',
   },
   {
     id: '8',
@@ -102,6 +110,7 @@ export const products: Product[] = [
     style: 'N/A',
     material: 'N/A',
     lensType: 'Polarized',
+    gender: 'Unisex',
   },
   {
     id: '9',
@@ -114,6 +123,7 @@ export const products: Product[] = [
     style: 'Rectangular',
     material: 'Metal',
     lensType: 'Non-Polarized',
+    gender: 'Men',
   },
   {
     id: '10',
@@ -126,6 +136,7 @@ export const products: Product[] = [
     style: 'Cat Eye',
     material: 'Acetate',
     lensType: 'Gradient',
+    gender: 'Women',
   },
   {
     id: '11',
@@ -138,6 +149,7 @@ export const products: Product[] = [
     style: 'N/A',
     material: 'N/A',
     lensType: 'N/A',
+    gender: 'Unisex',
   },
   {
     id: '12',
@@ -150,5 +162,6 @@ export const products: Product[] = [
     style: 'Round',
     material: 'Plastic',
     lensType: 'Blue Light',
+    gender: 'Unisex',
   },
 ];

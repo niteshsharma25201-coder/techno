@@ -1,5 +1,5 @@
 
-import { products, brands, styles, materials, lensTypes } from '@/lib/products';
+import { products, brands, styles, materials, lensTypes, genders } from '@/lib/products';
 import ProductFilters from '@/components/products/product-filters';
 import ProductList from '@/components/products/product-list';
 
@@ -11,6 +11,7 @@ type ProductsPageProps = {
     style?: string | string[];
     material?: string | string[];
     lensType?: string | string[];
+    gender?: string | string[];
   };
 };
 
@@ -36,6 +37,7 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
             styles={styles}
             materials={materials}
             lensTypes={lensTypes}
+            genders={genders}
             searchParams={searchParams}
           />
         </aside>

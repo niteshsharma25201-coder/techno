@@ -16,6 +16,7 @@ type ProductListProps = {
     style?: string | string[];
     material?: string | string[];
     lensType?: string | string[];
+    gender?: string | string[];
   };
 };
 
@@ -23,7 +24,7 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
 
   const filteredProducts = useMemo(() => {
     let products = allProducts;
-    const { q, category, brand, style, material, lensType } = searchParams || {};
+    const { q, category, brand, style, material, lensType, gender } = searchParams || {};
 
     if (q) {
       const searchTerm = q.toLowerCase();
@@ -39,7 +40,7 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
       products = products.filter(p => p.category === category);
     }
     
-    const filterByParam = (key: 'brand' | 'style' | 'material' | 'lensType') => {
+    const filterByParam = (key: 'brand' | 'style' | 'material' | 'lensType' | 'gender') => {
       const value = searchParams?.[key];
       if (value && value.length > 0) {
         const filterValues = Array.isArray(value) ? value : [value];
@@ -54,6 +55,7 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
     filterByParam('style');
     filterByParam('material');
     filterByParam('lensType');
+    filterByParam('gender');
     
     return products;
   }, [allProducts, searchParams]);
@@ -78,6 +80,3 @@ export default function ProductList({ allProducts, searchParams }: ProductListPr
     </div>
   );
 }
-
-
-
