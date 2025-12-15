@@ -38,7 +38,7 @@ const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
 
 export default function AdminUsersPage() {
   const firestore = useFirestore();
-  const { isAdmin } = useAdminStatus();
+  const { isAdmin, isLoading: isAdminLoading } = useAdminStatus();
 
   const usersQuery = useMemoFirebase(
     () => (isAdmin ? query(collection(firestore, 'users'), orderBy('createdAt', 'desc')) : null),
@@ -52,7 +52,7 @@ export default function AdminUsersPage() {
   }
 
   const renderContent = () => {
-    if (isLoadingUsers) {
+    if (isAdminLoading || (isAdmin && isLoadingUsers)) {
       return (
         <div className="space-y-2">
           {[...Array(5)].map((_, i) => (

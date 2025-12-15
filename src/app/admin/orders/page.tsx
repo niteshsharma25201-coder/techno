@@ -52,7 +52,7 @@ const getStatusVariant = (status: string) => {
 
 export default function AdminOrdersPage() {
   const firestore = useFirestore();
-  const { isAdmin } = useAdminStatus();
+  const { isAdmin, isLoading: isAdminLoading } = useAdminStatus();
 
   const ordersQuery = useMemoFirebase(
     () => (isAdmin ? query(collectionGroup(firestore, 'orders'), orderBy('createdAt', 'desc')) : null),
@@ -62,7 +62,7 @@ export default function AdminOrdersPage() {
   const { data: orders, isLoading: isLoadingOrders } = useCollection(ordersQuery);
 
   const renderContent = () => {
-     if (isLoadingOrders) {
+     if (isAdminLoading || (isAdmin && isLoadingOrders)) {
       return (
         <div className="space-y-2">
           {[...Array(5)].map((_, i) => (
