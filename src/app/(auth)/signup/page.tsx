@@ -13,6 +13,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth, useFirestore, useUser } from '@/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
+import { useEffect } from 'react';
+
+const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
 
 const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required.' }),
@@ -62,6 +65,19 @@ export default function SignupPage() {
       };
       
       await setDoc(userDocRef, userData);
+
+      // If the signing up user is the admin, create an admin role document.
+      if (data.email === ADMIN_EMAIL) {
+        const adminRoleRef = doc(firestore, 'roles_admin', uid);
+        await setDoc(adminRoleRef, {
+          id: uid,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+      }
       
       toast({
         title: 'Account Created!',
