@@ -4,7 +4,7 @@ import type { Product } from './types';
 export const brands = ['Ray-Ban', 'Technoii', 'Titan', 'Fastrack', 'Laureldale Eyewear', 'NVG', 'X- Ford', 'Velocity', 'Opium', 'Idee', 'Irus'];
 export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular', 'Sport'];
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
-export const lensTypes = ['Single Vision', 'Zero Power', 'Progressive', 'Bifocal', 'Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
+export const lensTypes = ['Single Vision', 'Zero Power', 'Progressive', 'Bifocal', 'Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light', 'Polycarbonate Tufan Unbreakable Lens'];
 export const genders = ['Men', 'Women', 'Kids', 'Unisex'];
 export const frameTypes = ['Full Rim', 'Rimless', 'Supra'];
 
@@ -75,7 +75,7 @@ export const products: Product[] = [
     brand: 'Technoii',
     style: 'Rectangular',
     material: 'Titanium',
-    lensType: 'Blue Light',
+    lensType: 'Polycarbonate Tufan Unbreakable Lens',
     gender: 'Men',
     frameType: 'Supra',
   },
