@@ -10,6 +10,7 @@ export type Product = {
   material: string;
   lensType: string;
   gender: 'Men' | 'Women' | 'Kids' | 'Unisex';
+  frameType: 'Full Rim' | 'Rimless' | 'Half Rim' | 'N/A';
 };
 
 export type Review = {

@@ -14,6 +14,7 @@ type ProductFiltersProps = {
   materials: string[];
   lensTypes: string[];
   genders: string[];
+  frameTypes: string[];
   searchParams?: {
     q?: string;
     category?: string;
@@ -22,6 +23,7 @@ type ProductFiltersProps = {
     material?: string | string[];
     lensType?: string | string[];
     gender?: string | string[];
+    frameType?: string | string[];
   };
 };
 
@@ -31,6 +33,7 @@ export default function ProductFilters({
   materials,
   lensTypes,
   genders,
+  frameTypes,
   searchParams,
 }: ProductFiltersProps) {
   const router = useRouter();
@@ -93,7 +96,7 @@ export default function ProductFilters({
         <CardTitle>Filters</CardTitle>
       </CardHeader>
       <CardContent>
-        <Accordion type="multiple" defaultValue={['brand', 'style', 'gender']} className="w-full">
+        <Accordion type="multiple" defaultValue={['brand', 'style', 'gender', 'frameType']} className="w-full">
           <AccordionItem value="brand">
             <AccordionTrigger>Brand</AccordionTrigger>
             <AccordionContent>
@@ -104,6 +107,12 @@ export default function ProductFilters({
             <AccordionTrigger>Style</AccordionTrigger>
             <AccordionContent>
               {renderFilterOptions(styles, 'style')}
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="frameType">
+            <AccordionTrigger>Frame Type</AccordionTrigger>
+            <AccordionContent>
+              {renderFilterOptions(frameTypes, 'frameType')}
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="material">

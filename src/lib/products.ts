@@ -6,6 +6,7 @@ export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular',
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
 export const lensTypes = ['Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
 export const genders = ['Men', 'Women', 'Kids', 'Unisex'];
+export const frameTypes = ['Full Rim', 'Rimless', 'Half Rim'];
 
 export const products: Product[] = [
   {
@@ -20,6 +21,7 @@ export const products: Product[] = [
     material: 'Metal',
     lensType: 'Non-Polarized',
     gender: 'Unisex',
+    frameType: 'Full Rim',
   },
   {
     id: '2',
@@ -33,6 +35,7 @@ export const products: Product[] = [
     material: 'Acetate',
     lensType: 'Polarized',
     gender: 'Men',
+    frameType: 'Full Rim',
   },
   {
     id: '3',
@@ -46,6 +49,7 @@ export const products: Product[] = [
     material: 'Acetate',
     lensType: 'Non-Polarized',
     gender: 'Women',
+    frameType: 'Full Rim',
   },
   {
     id: '4',
@@ -59,6 +63,7 @@ export const products: Product[] = [
     material: 'Metal',
     lensType: 'Non-Polarized',
     gender: 'Unisex',
+    frameType: 'Full Rim',
   },
   {
     id: '5',
@@ -72,6 +77,7 @@ export const products: Product[] = [
     material: 'Titanium',
     lensType: 'Blue Light',
     gender: 'Men',
+    frameType: 'Half Rim',
   },
   {
     id: '6',
@@ -85,6 +91,7 @@ export const products: Product[] = [
     material: 'Plastic',
     lensType: 'Mirrored',
     gender: 'Unisex',
+    frameType: 'Half Rim',
   },
   {
     id: '7',
@@ -98,6 +105,7 @@ export const products: Product[] = [
     material: 'N/A',
     lensType: 'N/A',
     gender: 'Unisex',
+    frameType: 'N/A',
   },
   {
     id: '8',
@@ -111,6 +119,7 @@ export const products: Product[] = [
     material: 'N/A',
     lensType: 'Polarized',
     gender: 'Unisex',
+    frameType: 'N/A',
   },
   {
     id: '9',
@@ -124,6 +133,7 @@ export const products: Product[] = [
     material: 'Metal',
     lensType: 'Non-Polarized',
     gender: 'Men',
+    frameType: 'Rimless',
   },
   {
     id: '10',
@@ -137,6 +147,7 @@ export const products: Product[] = [
     material: 'Acetate',
     lensType: 'Gradient',
     gender: 'Women',
+    frameType: 'Full Rim',
   },
   {
     id: '11',
@@ -150,6 +161,7 @@ export const products: Product[] = [
     material: 'N/A',
     lensType: 'N/A',
     gender: 'Unisex',
+    frameType: 'N/A',
   },
   {
     id: '12',
@@ -163,5 +175,6 @@ export const products: Product[] = [
     material: 'Plastic',
     lensType: 'Blue Light',
     gender: 'Unisex',
+    frameType: 'Full Rim',
   },
 ];
