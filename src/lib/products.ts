@@ -6,7 +6,7 @@ export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular',
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
 export const lensTypes = ['Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
 export const genders = ['Men', 'Women', 'Kids', 'Unisex'];
-export const frameTypes = ['Full Rim', 'Rimless', 'Half Rim'];
+export const frameTypes = ['Full Rim', 'Rimless', 'Half Rim', 'Supra'];
 
 export const products: Product[] = [
   {
@@ -77,7 +77,7 @@ export const products: Product[] = [
     material: 'Titanium',
     lensType: 'Blue Light',
     gender: 'Men',
-    frameType: 'Half Rim',
+    frameType: 'Supra',
   },
   {
     id: '6',
@@ -119,7 +119,7 @@ export const products: Product[] = [
     material: 'N/A',
     lensType: 'Polarized',
     gender: 'Unisex',
-    frameType: 'N/A',
+    frameType: 'NA',
   },
   {
     id: '9',
