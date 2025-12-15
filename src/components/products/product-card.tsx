@@ -14,10 +14,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   const image = PlaceHolderImages.find(p => p.id === product.imagePlaceholderId);
 
   return (
-    <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-background">
+    <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-background h-full">
       <Link href={`/products/${product.id}`} className="flex flex-col flex-grow">
         <CardHeader className="p-0">
-          <div className="relative aspect-video w-full">
+          <div className="relative aspect-[4/3] w-full">
             {image ? (
               <Image
                 src={image.imageUrl}
@@ -36,8 +36,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         </CardHeader>
         <CardContent className="p-4 flex-grow flex flex-col">
           <Badge variant="secondary" className="mb-2 w-fit">{product.category}</Badge>
-          <CardTitle className="text-lg font-semibold leading-tight mb-2 flex-grow">{product.name}</CardTitle>
-          <p className="text-2xl font-bold text-primary">
+          <CardTitle className="text-base md:text-lg font-semibold leading-tight mb-2 flex-grow">{product.name}</CardTitle>
+          <p className="text-xl md:text-2xl font-bold text-primary">
             ₹{product.price}
           </p>
         </CardContent>

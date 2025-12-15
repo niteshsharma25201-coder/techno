@@ -114,7 +114,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-       <section className="relative w-full h-[60vh] text-white overflow-hidden">
+       <section className="relative w-full h-[50vh] md:h-[60vh] text-white overflow-hidden">
          <Carousel
           className="w-full h-full"
           plugins={[
@@ -131,7 +131,7 @@ export default function Home() {
               const bannerImage = PlaceHolderImages.find(p => p.id === slide.id);
               return (
                 <CarouselItem key={slide.id}>
-                    <div className="relative w-full h-[60vh]">
+                    <div className="relative w-full h-[50vh] md:h-[60vh]">
                         <div className="absolute inset-0 bg-black/50 z-10" />
                         {bannerImage && (
                         <Image
@@ -144,10 +144,10 @@ export default function Home() {
                         />
                         )}
                         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-4">
-                            <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-shadow-lg">
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tight text-shadow-lg">
                                 {slide.title}
                             </h1>
-                            <p className="mt-4 max-w-2xl text-2xl md:text-3xl font-semibold text-white/90 text-shadow">
+                            <p className="mt-4 max-w-xl md:max-w-2xl text-lg md:text-2xl lg:text-3xl font-semibold text-white/90 text-shadow">
                                 {slide.subtitle}
                             </p>
                             <Button asChild size="lg" className="mt-8 shadow-lg">
@@ -165,19 +165,19 @@ export default function Home() {
       </section>
 
       {/* Categories Section */}
-      <section className="w-full py-16 lg:py-24 bg-background">
+      <section className="w-full py-12 md:py-16 lg:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">Shop by Category</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {categories.map((category) => {
               const categoryImage = PlaceHolderImages.find(p => p.id === category.imageId);
               return (
                 <Link key={category.title} href={category.href} className="group">
                   <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card">
-                    <CardContent className="p-6 flex flex-col items-center justify-center text-center">
-                      <div className="relative h-32 w-32 rounded-full overflow-hidden mb-4 border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-300">
+                    <CardContent className="p-4 md:p-6 flex flex-col items-center justify-center text-center">
+                      <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full overflow-hidden mb-4 border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-300">
                         {categoryImage ? (
                           <Image
                             src={categoryImage.imageUrl}
@@ -188,12 +188,12 @@ export default function Home() {
                           />
                         ) : (
                           <div className="bg-muted flex items-center justify-center h-full">
-                             <category.icon className="w-12 h-12 text-muted-foreground" />
+                             <category.icon className="w-10 h-10 md:w-12 md:h-12 text-muted-foreground" />
                           </div>
                         )}
                       </div>
-                      <h3 className="text-xl font-bold">{category.title}</h3>
-                      <p className="text-sm text-muted-foreground">{category.description}</p>
+                      <h3 className="text-lg md:text-xl font-bold">{category.title}</h3>
+                      <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -207,7 +207,7 @@ export default function Home() {
       <PersonalizedRecommendations />
 
       {/* Featured Products Section */}
-      <section className="w-full py-16 lg:py-24 bg-card">
+      <section className="w-full py-12 md:py-16 lg:py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">Featured Products</h2>
@@ -215,7 +215,7 @@ export default function Home() {
               Handpicked styles from our latest collection, just for you.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -229,7 +229,7 @@ export default function Home() {
       </section>
       
       {/* Why Choose Us Section */}
-      <section className="w-full py-16 lg:py-24 bg-background">
+      <section className="w-full py-12 md:py-16 lg:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose Technoii?</h2>
@@ -250,7 +250,7 @@ export default function Home() {
       </section>
 
       {/* BOGO Banner Section */}
-      <section className="w-full py-16 lg:py-20 bg-primary text-primary-foreground">
+      <section className="w-full py-12 md:py-16 lg:py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Gift className="h-16 w-16 mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold font-headline">Buy One, Get One Free</h2>
