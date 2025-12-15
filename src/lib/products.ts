@@ -6,7 +6,7 @@ export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular',
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
 export const lensTypes = ['Single Vision', 'Zero Power', 'Progressive', 'Bifocal', 'Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
 export const genders = ['Men', 'Women', 'Kids', 'Unisex'];
-export const frameTypes = ['Full Rim', 'Rimless', 'Half Rim', 'Supra'];
+export const frameTypes = ['Full Rim', 'Rimless', 'Supra'];
 
 export const products: Product[] = [
   {
@@ -91,7 +91,7 @@ export const products: Product[] = [
     material: 'Plastic',
     lensType: 'Mirrored',
     gender: 'Unisex',
-    frameType: 'Half Rim',
+    frameType: 'Full Rim',
   },
   {
     id: '7',
