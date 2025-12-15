@@ -4,7 +4,7 @@ import type { Product } from './types';
 export const brands = ['Ray-Ban', 'Technoii', 'Titan', 'Fastrack', 'Laureldale Eyewear', 'NVG', 'X- Ford', 'Velocity', 'Opium', 'Idee', 'Irus'];
 export const styles = ['Aviator', 'Wayfarer', 'Cat Eye', 'Round', 'Rectangular', 'Sport'];
 export const materials = ['Acetate', 'Metal', 'Titanium', 'Plastic'];
-export const lensTypes = ['Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
+export const lensTypes = ['Single Vision', 'Zero Power', 'Progressive', 'Bifocal', 'Polarized', 'Non-Polarized', 'Gradient', 'Mirrored', 'Blue Light'];
 export const genders = ['Men', 'Women', 'Kids', 'Unisex'];
 export const frameTypes = ['Full Rim', 'Rimless', 'Half Rim', 'Supra'];
 
