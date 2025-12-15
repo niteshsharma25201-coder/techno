@@ -5,6 +5,7 @@ import {
   useCollection,
   useMemoFirebase,
 } from '@/firebase';
+import { useAdminStatus } from '@/hooks/use-admin-status';
 import { collectionGroup, query, orderBy } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import {
@@ -51,10 +52,11 @@ const getStatusVariant = (status: string) => {
 
 export default function AdminOrdersPage() {
   const firestore = useFirestore();
+  const { isAdmin } = useAdminStatus();
 
   const ordersQuery = useMemoFirebase(
-    () => query(collectionGroup(firestore, 'orders'), orderBy('createdAt', 'desc')),
-    [firestore]
+    () => (isAdmin ? query(collectionGroup(firestore, 'orders'), orderBy('createdAt', 'desc')) : null),
+    [firestore, isAdmin]
   );
   
   const { data: orders, isLoading: isLoadingOrders } = useCollection(ordersQuery);

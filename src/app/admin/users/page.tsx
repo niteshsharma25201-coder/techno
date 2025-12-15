@@ -5,6 +5,7 @@ import {
   useCollection,
   useMemoFirebase,
 } from '@/firebase';
+import { useAdminStatus } from '@/hooks/use-admin-status';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import {
@@ -37,10 +38,11 @@ const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
 
 export default function AdminUsersPage() {
   const firestore = useFirestore();
+  const { isAdmin } = useAdminStatus();
 
   const usersQuery = useMemoFirebase(
-    () => query(collection(firestore, 'users'), orderBy('createdAt', 'desc')),
-    [firestore]
+    () => (isAdmin ? query(collection(firestore, 'users'), orderBy('createdAt', 'desc')) : null),
+    [firestore, isAdmin]
   );
   
   const { data: users, isLoading: isLoadingUsers } = useCollection(usersQuery);
