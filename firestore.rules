@@ -148,8 +148,7 @@ service cloud.firestore {
      *   /roles_admin/{userId}
      */
     match /roles_admin/{userId} {
-      allow get: if isOwner(userId) || isAdmin();
-      allow list: if isAdmin();
+      allow get, list: if isAdmin();
       allow create: if isAdmin();
       allow update: if isAdmin() && resource != null;
       allow delete: if isAdmin() && resource != null;
@@ -162,7 +161,7 @@ service cloud.firestore {
      *   /products/{productId}/reviews/{reviewId}
      */
     match /products/{productId}/reviews/{reviewId} {
-      allow read: if true;
+      allow read, list: if true;
       allow create: if isSignedIn() && isValidReview();
       allow update, delete: if isSignedIn() && isOwner(resource.data.userId);
     }
