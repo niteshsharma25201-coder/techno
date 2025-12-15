@@ -4,6 +4,8 @@ import { useUser, useFirestore, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { useDoc } from '@/firebase/firestore/use-doc';
 
+const ADMIN_EMAIL = 'niteshsharma25201@gmail.com';
+
 /**
  * A hook to determine if the current user is an administrator.
  * @returns An object with `isAdmin`, `isLoading`, and `isAuthenticated`.
@@ -24,8 +26,9 @@ export function useAdminStatus() {
   // `isLoading` will be true while the document is being fetched.
   const { data: adminDoc, isLoading: isAdminDocLoading } = useDoc(adminDocRef);
 
-  // The user is an admin if the admin document exists.
-  const isAdmin = !!adminDoc;
+  // The user is an admin if the admin document exists OR their email is the admin email.
+  // The email check is a fallback, the doc is the source of truth for rules.
+  const isAdmin = !!adminDoc || user?.email === ADMIN_EMAIL;
   
   // The overall loading state is true if we are still checking the user's
   // authentication state OR if we are fetching the admin document.
