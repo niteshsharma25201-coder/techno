@@ -96,7 +96,13 @@ export default function ProductFilters({
         <CardTitle>Filters</CardTitle>
       </CardHeader>
       <CardContent>
-        <Accordion type="multiple" defaultValue={['brand', 'style', 'gender', 'frameType']} className="w-full">
+        <Accordion type="multiple" defaultValue={['gender', 'brand', 'style', 'frameType']} className="w-full">
+          <AccordionItem value="gender">
+            <AccordionTrigger>Gender</AccordionTrigger>
+            <AccordionContent>
+              {renderFilterOptions(genders, 'gender')}
+            </AccordionContent>
+          </AccordionItem>
           <AccordionItem value="brand">
             <AccordionTrigger>Brand</AccordionTrigger>
             <AccordionContent>
@@ -125,12 +131,6 @@ export default function ProductFilters({
             <AccordionTrigger>Lens Type</AccordionTrigger>
             <AccordionContent>
               {renderFilterOptions(lensTypes, 'lensType')}
-            </AccordionContent>
-          </AccordionItem>
-           <AccordionItem value="gender">
-            <AccordionTrigger>Gender</AccordionTrigger>
-            <AccordionContent>
-              {renderFilterOptions(genders, 'gender')}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
