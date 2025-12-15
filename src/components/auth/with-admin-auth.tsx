@@ -1,58 +1,53 @@
 'use client';
 
-import { useUser } from '@/firebase';
+import { useAdminStatus } from '@/hooks/use-admin-status';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { useFirestore } from '@/firebase';
+import { useEffect } from 'react';
 
 const withAdminAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const WithAdminAuthComponent = (props: P) => {
-    const { user, isUserLoading } = useUser();
-    const firestore = useFirestore();
+    const { isAdmin, isLoading: isAdminLoading, isAuthenticated } = useAdminStatus();
     const router = useRouter();
-    const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
     useEffect(() => {
-      if (!isUserLoading) {
-        if (!user) {
-          router.replace('/login');
-          return;
-        }
-
-        const checkAdminStatus = async () => {
-          const adminDocRef = doc(firestore, 'roles_admin', user.uid);
-          const adminDoc = await getDoc(adminDocRef);
-          if (adminDoc.exists()) {
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            router.replace('/');
-          }
-        };
-        
-        checkAdminStatus();
+      // Don't do anything while we are still loading the user or admin status.
+      if (isAdminLoading) {
+        return;
       }
-    }, [user, isUserLoading, router, firestore]);
+      
+      // If the user is not authenticated, redirect to login.
+      if (!isAuthenticated) {
+        router.replace('/login');
+        return;
+      }
 
-    if (isUserLoading || isAdmin === null) {
+      // If the user is authenticated but not an admin, redirect to the homepage.
+      if (!isAdmin) {
+        router.replace('/');
+      }
+
+    }, [isAdmin, isAdminLoading, isAuthenticated, router]);
+
+    // While loading, show a loading indicator.
+    if (isAdminLoading) {
       return (
         <div className="flex items-center justify-center min-h-screen">
-          <p>Loading...</p>
+          <p>Verifying permissions...</p>
         </div>
       );
     }
-
-    if (!isAdmin) {
-      // This is a fallback, but the effect should have already redirected.
-      return (
-        <div className="flex items-center justify-center min-h-screen">
-          <p>Access Denied</p>
-        </div>
-      );
+    
+    // If the user is an admin, render the requested component.
+    if (isAdmin) {
+      return <WrappedComponent {...props} />;
     }
 
-    return <WrappedComponent {...props} />;
+    // Otherwise, show an access denied message as a fallback while redirecting.
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Access Denied</p>
+      </div>
+    );
   };
 
   WithAdminAuthComponent.displayName = `withAdminAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;

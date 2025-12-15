@@ -38,6 +38,7 @@ import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { useAuth, useUser } from '@/firebase';
 import SearchBar from './search-bar';
+import { useAdminStatus } from '@/hooks/use-admin-status';
 
 const shopSubLinks = [
     { href: '/products?category=Sunglasses', label: 'Sunglasses' },
@@ -51,6 +52,7 @@ export default function Header() {
   const pathname = usePathname();
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
+  const { isAdmin } = useAdminStatus();
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -90,9 +92,11 @@ export default function Header() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <SheetClose asChild>
-             <Link href="/admin" className="block w-full p-4 text-lg text-muted-foreground hover:text-primary">Admin Panel</Link>
-          </SheetClose>
+          {isAdmin && (
+            <SheetClose asChild>
+              <Link href="/admin" className="block w-full p-4 text-lg text-muted-foreground hover:text-primary">Admin Panel</Link>
+            </SheetClose>
+          )}
         </>
       );
     }
@@ -127,17 +131,19 @@ export default function Header() {
                 </DropdownMenuContent>
             </DropdownMenu>
         </li>
-        <li>
-          <Link
-            href="/admin"
-            className={cn(
-              'text-sm font-medium transition-colors hover:text-primary',
-              pathname === '/admin' ? 'text-primary' : 'text-muted-foreground'
-            )}
-          >
-            Admin Panel
-          </Link>
-        </li>
+        {isAdmin && (
+          <li>
+            <Link
+              href="/admin"
+              className={cn(
+                'text-sm font-medium transition-colors hover:text-primary',
+                pathname === '/admin' ? 'text-primary' : 'text-muted-foreground'
+              )}
+            >
+              Admin Panel
+            </Link>
+          </li>
+        )}
       </>
     );
   };
