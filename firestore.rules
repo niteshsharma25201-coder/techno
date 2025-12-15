@@ -143,12 +143,14 @@ service cloud.firestore {
      * @description
      *   Manages admin role documents. The existence of a document in this collection
      *   grants a user admin privileges across the application. Only existing admins
-     *   can view or modify documents in this collection.
+     *   can view or modify documents in this collection, except a user can read
+     *   their own role document to check their status.
      * @path
      *   /roles_admin/{userId}
      */
     match /roles_admin/{userId} {
-      allow get, list: if isAdmin();
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
       allow create: if isAdmin();
       allow update: if isAdmin() && resource != null;
       allow delete: if isAdmin() && resource != null;
