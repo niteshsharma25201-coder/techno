@@ -17,6 +17,8 @@ type ProductsPageProps = {
 };
 
 export default async function ProductsPage({ searchParams }: { searchParams: ProductsPageProps['searchParams'] }) {
+  // Although searchParams can be a promise, Next.js resolves it for us in this context.
+  // We can treat it as a direct object.
   const resolvedSearchParams = searchParams || {};
   const searchTerm = resolvedSearchParams.q || '';
 
