@@ -16,11 +16,11 @@
  *
  * Key Security Decisions:
  * - Admin by Existence: Administrator status is determined by the existence of a
- *   document in `/roles_admin/{auth.uid}`. This is a highly performant and secure
+ *   document in `/roles_admin/{request.auth.uid}`. This is a highly performant and secure
  *   pattern that avoids embedding roles in user documents or other collections.
  * - User Data Privacy: The `/users` collection cannot be listed by non-admins,
  *   preventing enumeration of all users in the application.
- * - Admin Privileges: Admins have read-only access to all user data but cannot
+ * - Admin Privileges: Admins have read access to all user data but cannot
  *   modify or delete it. Management of the admin role collection itself is restricted
  *   to other existing admins.
  * - Self-Creation: Users can only create their own user document (`/users/{userId}`
@@ -70,6 +70,7 @@ service cloud.firestore {
      * Checks if the user making the request has an admin role.
      * Admin status is determined by the existence of a document in the
      * `roles_admin` collection corresponding to the user's UID.
+     * This is the single source of truth for admin privileges.
      */
     function isAdmin() {
       return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
@@ -118,7 +119,7 @@ service cloud.firestore {
      */
     match /users/{userId} {
       allow get: if isOwner(userId) || isAdmin();
-      allow list: if isAdmin();
+      allow list: if isAdmin(); // Only admins can list all users.
       allow create: if isOwner(userId) && hasCorrectUserIdOnCreate(userId);
       allow update: if isOwner(userId) && resource != null && isUserIdImmutable();
       allow delete: if isOwner(userId) && resource != null;
@@ -126,7 +127,7 @@ service cloud.firestore {
       /**
        * @description
        *   Manages user orders. Users can create and view their own orders.
-       *   Admins can view and update order status.
+       *   Admins can view all orders and update their status.
        * @path
        *   /users/{userId}/orders/{orderId}
        */
@@ -142,15 +143,16 @@ service cloud.firestore {
     /**
      * @description
      *   Manages admin role documents. The existence of a document in this collection
-     *   grants a user admin privileges across the application. Only existing admins
-     *   can view or modify documents in this collection, except a user can read
-     *   their own role document to check their status.
+     *   grants a user admin privileges across the application.
      * @path
      *   /roles_admin/{userId}
      */
     match /roles_admin/{userId} {
+      // A user can check their own admin status. An admin can check anyone's.
       allow get: if isOwner(userId) || isAdmin();
+      // Only admins can see the full list of other admins.
       allow list: if isAdmin();
+      // Only an existing admin can make another user an admin.
       allow create: if isAdmin();
       allow update: if isAdmin() && resource != null;
       allow delete: if isAdmin() && resource != null;

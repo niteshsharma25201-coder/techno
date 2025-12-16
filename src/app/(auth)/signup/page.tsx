@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -55,28 +56,31 @@ export default function SignupPage() {
       const { uid } = userCredential.user;
       
       const userDocRef = doc(firestore, 'users', uid);
+      const now = new Date().toISOString();
       const userData = {
         id: uid,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: now,
+        updatedAt: now,
       };
       
       await setDoc(userDocRef, userData);
 
       // If the signing up user is the admin, create an admin role document.
-      if (data.email === ADMIN_EMAIL) {
+      // This is critical for the security rules to grant admin permissions.
+      if (data.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
         const adminRoleRef = doc(firestore, 'roles_admin', uid);
-        await setDoc(adminRoleRef, {
+        const adminData = {
           id: uid,
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
+          createdAt: now,
+          updatedAt: now,
+        };
+        await setDoc(adminRoleRef, adminData);
       }
       
       toast({
