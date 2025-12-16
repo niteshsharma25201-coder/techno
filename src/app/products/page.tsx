@@ -3,8 +3,9 @@ import { products, brands, styles, materials, lensTypes, genders, frameTypes } f
 import ProductFilters from '@/components/products/product-filters';
 import ProductList from '@/components/products/product-list';
 
+// Define the shape of the search parameters object.
 type ProductsPageProps = {
-  searchParams?: {
+  searchParams: {
     q?: string;
     category?: string;
     brand?: string | string[];
@@ -16,11 +17,10 @@ type ProductsPageProps = {
   };
 };
 
-export default async function ProductsPage({ searchParams }: { searchParams: ProductsPageProps['searchParams'] }) {
-  // Although searchParams can be a promise, Next.js resolves it for us in this context.
-  // We can treat it as a direct object.
-  const resolvedSearchParams = searchParams || {};
-  const searchTerm = resolvedSearchParams.q || '';
+// Next.js automatically resolves searchParams on the server.
+// We can type it directly and use it without needing async/await here.
+export default function ProductsPage({ searchParams }: ProductsPageProps) {
+  const searchTerm = searchParams.q || '';
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -43,11 +43,11 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
             lensTypes={lensTypes}
             genders={genders}
             frameTypes={frameTypes}
-            searchParams={resolvedSearchParams}
+            searchParams={searchParams}
           />
         </aside>
         <main className="lg:col-span-3">
-          <ProductList allProducts={products} searchParams={resolvedSearchParams} />
+          <ProductList allProducts={products} searchParams={searchParams} />
         </main>
       </div>
     </div>
