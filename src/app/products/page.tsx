@@ -5,7 +5,8 @@ import ProductList from '@/components/products/product-list';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Define the shape of the resolved search parameters object.
+// Define the shape of the search parameters object.
+// This is the correct way to type searchParams in the Next.js App Router.
 type ResolvedSearchParams = {
   q?: string;
   category?: string;
@@ -17,8 +18,9 @@ type ResolvedSearchParams = {
   frameType?: string | string[];
 };
 
-// The page component is now async and searchParams are correctly typed.
-export default async function ProductsPage({ searchParams }: { searchParams: ResolvedSearchParams }) {
+// The page component no longer needs to be async.
+// Next.js automatically resolves searchParams on the server.
+export default function ProductsPage({ searchParams }: { searchParams: ResolvedSearchParams }) {
 
   const searchTerm = searchParams.q || '';
 
