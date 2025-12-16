@@ -291,7 +291,7 @@ export default function ProductPageContent({ product }: ProductPageContentProps)
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4 mt-6">
-            <Card className="bg-secondary/50">
+            <Card className="bg-secondary/50 border">
               <CardHeader className="flex flex-row items-center gap-4 p-4">
                 <ShieldCheck className="w-8 h-8 text-primary" />
                 <CardTitle className="text-lg p-0">Return Policy</CardTitle>
@@ -302,7 +302,7 @@ export default function ProductPageContent({ product }: ProductPageContentProps)
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-secondary/50">
+            <Card className="bg-secondary/50 border">
               <CardHeader className="flex flex-row items-center gap-4 p-4">
                 <Truck className="w-8 h-8 text-primary" />
                 <CardTitle className="text-lg p-0">Free Delivery</CardTitle>

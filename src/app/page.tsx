@@ -177,7 +177,7 @@ export default function Home() {
                 <Link key={category.title} href={category.href} className="group">
                   <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card">
                     <CardContent className="p-4 md:p-6 flex flex-col items-center justify-center text-center">
-                      <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full overflow-hidden mb-4 border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-300">
+                      <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full overflow-hidden mb-4 border-4 border-primary/10 group-hover:border-primary/30 transition-all duration-300">
                         {categoryImage ? (
                           <Image
                             src={categoryImage.imageUrl}
@@ -207,7 +207,7 @@ export default function Home() {
       <PersonalizedRecommendations />
 
       {/* Featured Products Section */}
-      <section className="w-full py-12 md:py-16 lg:py-24 bg-card">
+      <section className="w-full py-12 md:py-16 lg:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">Featured Products</h2>
@@ -239,7 +239,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {features.map((feature, index) => (
-              <div key={index} className="flex flex-col items-center p-6 bg-card rounded-lg">
+              <div key={index} className="flex flex-col items-center p-6 bg-card rounded-lg border">
                 <feature.icon className="h-12 w-12 text-primary mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground">{feature.description}</p>

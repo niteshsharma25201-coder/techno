@@ -14,7 +14,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const image = PlaceHolderImages.find(p => p.id === product.imagePlaceholderId);
 
   return (
-    <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-background h-full">
+    <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-background h-full border">
       <Link href={`/products/${product.id}`} className="flex flex-col flex-grow">
         <CardHeader className="p-0">
           <div className="relative aspect-[4/3] w-full">
