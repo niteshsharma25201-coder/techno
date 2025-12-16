@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 // Define the shape of the resolved search parameters object.
-type SearchParams = {
+type ResolvedSearchParams = {
   q?: string;
   category?: string;
   brand?: string | string[];
@@ -18,7 +18,7 @@ type SearchParams = {
 };
 
 // The page component is now async and searchParams are correctly typed.
-export default async function ProductsPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function ProductsPage({ searchParams }: { searchParams: ResolvedSearchParams }) {
 
   const searchTerm = searchParams.q || '';
 
