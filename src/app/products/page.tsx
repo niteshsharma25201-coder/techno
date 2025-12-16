@@ -16,8 +16,9 @@ type ProductsPageProps = {
   };
 };
 
-export default function ProductsPage({ searchParams }: ProductsPageProps) {
-  const searchTerm = searchParams?.q || '';
+export default async function ProductsPage({ searchParams }: { searchParams: ProductsPageProps['searchParams'] }) {
+  const resolvedSearchParams = searchParams || {};
+  const searchTerm = resolvedSearchParams.q || '';
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -40,11 +41,11 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
             lensTypes={lensTypes}
             genders={genders}
             frameTypes={frameTypes}
-            searchParams={searchParams}
+            searchParams={resolvedSearchParams}
           />
         </aside>
         <main className="lg:col-span-3">
-          <ProductList allProducts={products} searchParams={searchParams} />
+          <ProductList allProducts={products} searchParams={resolvedSearchParams} />
         </main>
       </div>
     </div>
