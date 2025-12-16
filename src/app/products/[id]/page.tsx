@@ -1,16 +1,16 @@
-
 import { notFound } from 'next/navigation';
 import { products } from '@/lib/products';
 import ProductPageContent from '@/components/products/product-page-content';
 
 type ProductPageProps = {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 };
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { id } = await params;
+export default function ProductPage({ params }: ProductPageProps) {
+  const { id } = params;
+
   const product = products.find((p) => p.id === id);
 
   if (!product) {
