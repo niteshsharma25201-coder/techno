@@ -2,24 +2,24 @@
 import { products, brands, styles, materials, lensTypes, genders, frameTypes } from '@/lib/products';
 import ProductFilters from '@/components/products/product-filters';
 import ProductList from '@/components/products/product-list';
+import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-// Define the shape of the search parameters object.
-type ProductsPageProps = {
-  searchParams: {
-    q?: string;
-    category?: string;
-    brand?: string | string[];
-    style?: string | string[];
-    material?: string | string[];
-    lensType?: string | string[];
-    gender?: string | string[];
-    frameType?: string | string[];
-  };
+// Define the shape of the resolved search parameters object.
+type SearchParams = {
+  q?: string;
+  category?: string;
+  brand?: string | string[];
+  style?: string | string[];
+  material?: string | string[];
+  lensType?: string | string[];
+  gender?: string | string[];
+  frameType?: string | string[];
 };
 
-// Next.js automatically resolves searchParams on the server for page components.
-// We can type it directly and use it.
-export default function ProductsPage({ searchParams }: ProductsPageProps) {
+// The page component is now async and searchParams are correctly typed.
+export default async function ProductsPage({ searchParams }: { searchParams: SearchParams }) {
+
   const searchTerm = searchParams.q || '';
 
   return (
@@ -36,18 +36,22 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
       </header>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1">
-          <ProductFilters
-            brands={brands}
-            styles={styles}
-            materials={materials}
-            lensTypes={lensTypes}
-            genders={genders}
-            frameTypes={frameTypes}
-            searchParams={searchParams}
-          />
+           <Suspense fallback={<Skeleton className="h-[500px] w-full" />}>
+            <ProductFilters
+              brands={brands}
+              styles={styles}
+              materials={materials}
+              lensTypes={lensTypes}
+              genders={genders}
+              frameTypes={frameTypes}
+              searchParams={searchParams}
+            />
+          </Suspense>
         </aside>
         <main className="lg:col-span-3">
-          <ProductList allProducts={products} searchParams={searchParams} />
+          <Suspense fallback={<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"><Skeleton className="h-96 w-full" /><Skeleton className="h-96 w-full" /><Skeleton className="h-96 w-full" /></div>}>
+            <ProductList allProducts={products} searchParams={searchParams} />
+          </Suspense>
         </main>
       </div>
     </div>
