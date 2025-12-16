@@ -17,8 +17,8 @@ type ProductsPageProps = {
   };
 };
 
-// Next.js automatically resolves searchParams on the server.
-// We can type it directly and use it without needing async/await here.
+// Next.js automatically resolves searchParams on the server for page components.
+// We can type it directly and use it.
 export default function ProductsPage({ searchParams }: ProductsPageProps) {
   const searchTerm = searchParams.q || '';
 
