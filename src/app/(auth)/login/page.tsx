@@ -43,11 +43,12 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
+        const res = await signInWithEmailAndPassword(auth, data.email, data.password);
         toast({
             title: 'Logged In',
             description: 'You have been successfully logged in.',
         });
+        console.log("res:",res)
       // The useUser hook will detect the auth state change and the useEffect above will redirect.
     } catch(error: any) {
         let title = 'Login Failed';
