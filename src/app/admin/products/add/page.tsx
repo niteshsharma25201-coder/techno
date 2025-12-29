@@ -67,6 +67,7 @@ export default function AddProductPage() {
       style: '',
       material: '',
       lensType: '',
+      imageZip: undefined,
     },
   });
 
