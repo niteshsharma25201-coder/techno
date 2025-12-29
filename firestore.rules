@@ -11,6 +11,8 @@
  *   scoped directly to the user who owns the document.
  * - /roles_admin/{userId}: A lookup collection where the existence of a document
  *   signifies that the user with the corresponding {userId} has administrative privileges.
+ * - /products/{productId}: Stores product information. Publicly readable, but only
+ *   modifiable by administrators.
  * - /products/{productId}/reviews/{reviewId}: Stores user-submitted reviews for products.
  * - /users/{userId}/orders/{orderId}: Stores order information for each user.
  *
@@ -30,6 +32,9 @@
  *   or delete their own reviews. All users can read reviews.
  * - Order Management: Users can create and view their own orders. Admins can
  *   view all orders and update their status.
+ * - Product Management: Products are publicly readable by everyone, ensuring fast
+ *   access for all visitors. However, only administrators can create, update, or
+ *   delete products, protecting the integrity of the catalog.
  *
  * Denormalization for Authorization:
  * This ruleset relies on path-based ownership for `/users/{userId}` documents, making
@@ -160,14 +165,27 @@ service cloud.firestore {
 
     /**
      * @description
-     *   Manages product reviews.
+     *   Manages product catalog data.
      * @path
-     *   /products/{productId}/reviews/{reviewId}
+     *   /products/{productId}
      */
-    match /products/{productId}/reviews/{reviewId} {
+    match /products/{productId} {
+      // Products are public and can be read by anyone.
       allow read, list: if true;
-      allow create: if isSignedIn() && isValidReview();
-      allow update, delete: if isSignedIn() && isOwner(resource.data.userId);
+      // Only administrators can create, update, or delete products.
+      allow write: if isAdmin();
+
+      /**
+       * @description
+       *   Manages product reviews.
+       * @path
+       *   /products/{productId}/reviews/{reviewId}
+       */
+      match /reviews/{reviewId} {
+        allow read, list: if true;
+        allow create: if isSignedIn() && isValidReview();
+        allow update, delete: if isSignedIn() && isOwner(resource.data.userId);
+      }
     }
   }
 }
