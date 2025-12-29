@@ -215,7 +215,7 @@ export default function AddProductPage() {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select a style" />
-                          </Trigger>
+                          </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           {styles.map((style) => (
