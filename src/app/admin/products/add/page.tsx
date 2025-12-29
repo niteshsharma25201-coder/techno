@@ -44,7 +44,6 @@ const productSchema = z.object({
   style: z.string().min(1, 'Style is required.'),
   material: z.string().min(1, 'Material is required.'),
   lensType: z.string().min(1, 'Lens type is required.'),
-  // We'll add a check for the file in the form handler
   imageZip: z.any().optional(),
 });
 
@@ -67,9 +66,10 @@ export default function AddProductPage() {
       style: '',
       material: '',
       lensType: '',
-      imageZip: undefined,
     },
   });
+
+  const { register } = form;
 
   const onSubmit = (data: ProductFormValues) => {
     // In a real app, this would trigger an upload to Firebase Storage,
@@ -278,27 +278,17 @@ export default function AddProductPage() {
                     </FormItem>
                   )}
                 />
-                 <FormField
-                  control={form.control}
-                  name="imageZip"
-                  render={({ field }) => {
-                    const { ref, onChange, ...rest } = field;
-                    return (
-                      <FormItem>
-                        <FormLabel>Product Images (ZIP)</FormLabel>
-                        <FormControl>
-                           <Input
-                            type="file"
-                            accept=".zip"
-                            onChange={(e) => onChange(e.target.files)}
-                            {...rest}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
+                 <FormItem>
+                  <FormLabel>Product Images (ZIP)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="file"
+                      accept=".zip"
+                      {...register("imageZip")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               </div>
 
               <div className="flex justify-end gap-2">
