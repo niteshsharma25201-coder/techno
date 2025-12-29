@@ -44,7 +44,8 @@ const productSchema = z.object({
   style: z.string().min(1, 'Style is required.'),
   material: z.string().min(1, 'Material is required.'),
   lensType: z.string().min(1, 'Lens type is required.'),
-  imagePlaceholderId: z.string().min(1, 'Image Placeholder ID is required.'),
+  // We'll add a check for the file in the form handler
+  imageZip: z.any().optional(),
 });
 
 type ProductFormValues = z.infer<typeof productSchema>;
@@ -66,20 +67,32 @@ export default function AddProductPage() {
       style: '',
       material: '',
       lensType: '',
-      imagePlaceholderId: 'product-',
     },
   });
 
   const onSubmit = (data: ProductFormValues) => {
-    // In a real app, this would submit to a Firestore collection.
-    // For this demo, we'll just show a success message.
+    // In a real app, this would trigger an upload to Firebase Storage,
+    // then a Cloud Function to unzip and update Firestore.
+    // For this demo, we'll log the file info.
+    const file = data.imageZip?.[0];
+    if (file) {
+      console.log('Zip file to be uploaded:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
+       toast({
+        title: 'Product Added (Simulated)!',
+        description: `${data.name} and image zip ${file.name} are ready for processing.`,
+      });
+    } else {
+       toast({
+        title: 'Product Added (Simulated)!',
+        description: `${data.name} has been added without an image zip file.`,
+      });
+    }
+    
     console.log('New Product Data:', data);
-    toast({
-      title: 'Product Added!',
-      description: `${data.name} has been added to the product catalog.`,
-    });
-    // In a real app, we'd redirect or clear the form.
-    // For now, let's just reset the form.
     form.reset();
   };
 
@@ -202,7 +215,7 @@ export default function AddProductPage() {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select a style" />
-                          </SelectTrigger>
+                          </Trigger>
                         </FormControl>
                         <SelectContent>
                           {styles.map((style) => (
@@ -266,16 +279,24 @@ export default function AddProductPage() {
                 />
                  <FormField
                   control={form.control}
-                  name="imagePlaceholderId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Image Placeholder ID</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g., product-13" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  name="imageZip"
+                  render={({ field }) => {
+                    const { ref, onChange, ...rest } = field;
+                    return (
+                      <FormItem>
+                        <FormLabel>Product Images (ZIP)</FormLabel>
+                        <FormControl>
+                           <Input
+                            type="file"
+                            accept=".zip"
+                            onChange={(e) => onChange(e.target.files)}
+                            {...rest}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
 

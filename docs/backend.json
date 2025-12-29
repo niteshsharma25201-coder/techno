@@ -193,9 +193,13 @@
           "type": "number",
           "description": "The price of the product."
         },
-        "imagePlaceholderId": {
-          "type": "string",
-          "description": "The ID used to reference the product's placeholder image."
+        "imageUrls": {
+          "type": "array",
+          "description": "A list of URLs for the product's images.",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
         },
         "category": {
           "type": "string",
@@ -250,7 +254,7 @@
         "name",
         "description",
         "price",
-        "imagePlaceholderId",
+        "imageUrls",
         "category",
         "brand",
         "style",
