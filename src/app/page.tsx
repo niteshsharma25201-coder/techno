@@ -237,12 +237,21 @@ export default function Home() {
               We are committed to providing the best products and services to our customers.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="max-w-4xl mx-auto space-y-12">
             {features.map((feature, index) => (
-              <div key={index} className="flex flex-col items-center p-6 bg-card rounded-lg border">
-                <feature.icon className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+              <div
+                key={index}
+                className="grid md:grid-cols-5 gap-8 items-center"
+              >
+                <div className={`flex justify-center md:col-span-1 ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
+                  <div className="bg-primary/10 text-primary p-5 rounded-full border-4 border-primary/20">
+                     <feature.icon className="h-12 w-12" />
+                  </div>
+                </div>
+                <div className={`md:col-span-4 ${index % 2 === 0 ? 'md:order-2 text-left' : 'md:order-1 md:text-right text-left'}`}>
+                  <h3 className="text-2xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground text-lg">{feature.description}</p>
+                </div>
               </div>
             ))}
           </div>
